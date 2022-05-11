@@ -157,6 +157,7 @@ namespace MySpace.Models
 
         public int Id { get; set; }
 
+        [Display(Name = "Type d'usager"), Required(ErrorMessage = "Obligatoire")]
         public int UserTypeId { get; set; }
 
         [Display(Name = "Prenom"), Required(ErrorMessage = "Obligatoire")]

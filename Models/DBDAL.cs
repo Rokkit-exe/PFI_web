@@ -87,7 +87,7 @@ namespace MySpace.Models
             user.CreationDate = DateTime.Now;
             DB.SaveChanges();
             DB.Entry(user).Reference(u => u.Gender).Load();
-            DB.Entry(user).Reference(u => u.UserType).Load(); 
+            DB.Entry(user).Reference(u => u.UserType).Load();
             OnlineUsers.RenewSerialNumber();
             return user;
         }
