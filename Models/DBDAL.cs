@@ -410,5 +410,11 @@ namespace MySpace.Models
 
         }
 
+        public static List<Video> Get_Video_Artist(this MySpaceDBEntities DB, int userId)
+        {
+            Artist Artist = DB.Artists.Where(a => a.UserId == userId).FirstOrDefault();
+            return DB.Videos.Where(v => v.ArtistId == Artist.Id).ToList();
+        }
+
     }
 }

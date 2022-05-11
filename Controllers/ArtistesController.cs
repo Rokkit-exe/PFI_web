@@ -34,13 +34,17 @@ namespace MySpace.Controllers
 
         public ActionResult Index()
         {
-            return View();
+            return View(DB.Artists);
         }
 
         // GET: Artistes/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            if (id == DB.Artists.Where(A => A.UserId == OnlineUsers.CurrentUserId).FirstOrDefault().Id)
+            {
+                return RedirectToAction("Edit/" + id);
+            }
+            return View(DB.Artists.Where(a => a.Id == id).FirstOrDefault());
         }
 
         // GET: Artistes/Create
@@ -56,14 +60,15 @@ namespace MySpace.Controllers
         {
             if (ModelState.IsValid)
             {
-                AddVideo(video);
+                AddVideo(video.ArtistId, video.Title, video.YoutubeLink);
             }
+            return RedirectToAction("index");
         }
 
         // GET: Artistes/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            return View(DB.Artists.Where(a => a.Id == id).FirstOrDefault());
         }
 
         // POST: Artistes/Edit/5
