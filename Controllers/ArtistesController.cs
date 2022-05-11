@@ -38,53 +38,9 @@ namespace MySpace.Controllers
         }
 
         // GET: Artistes/Details/5
-        public ActionResult Details(int id)
-        {
-            if (id == DB.Artists.Where(A => A.UserId == OnlineUsers.CurrentUserId).FirstOrDefault().Id)
-            {
-                return RedirectToAction("Edit/" + id);
-            }
-            return View(DB.Artists.Where(a => a.Id == id).FirstOrDefault());
-        }
-
-        // GET: Artistes/Create
-        public ActionResult Create()
-        {
-            ViewBag.UserTypes = SelectListItemConverter<UserType>.Convert(DB.UserTypes.ToList());
-            return View(new Video());
-        }
-
-        // POST: Artistes/Create
-        [HttpPost]
-        public ActionResult Create(Video video)
-        {
-            if (ModelState.IsValid)
-            {
-                AddVideo(video.ArtistId, video.Title, video.YoutubeLink);
-            }
-            return RedirectToAction("index");
-        }
-
-        // GET: Artistes/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Page(int id)
         {
             return View(DB.Artists.Where(a => a.Id == id).FirstOrDefault());
-        }
-
-        // POST: Artistes/Edit/5
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
         }
 
         // GET: Artistes/Delete/5
