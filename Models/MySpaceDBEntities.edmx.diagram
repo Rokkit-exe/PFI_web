@@ -9,7 +9,7 @@
         <EntityTypeShape EntityType="MySpaceDBModel.Gender" Width="1.5" PointX="0.625" PointY="0.5" IsExpanded="true" />
         <EntityTypeShape EntityType="MySpaceDBModel.Login" Width="1.5" PointX="4.625" PointY="0.5" IsExpanded="true" />
         <EntityTypeShape EntityType="MySpaceDBModel.ResetPasswordCommand" Width="1.5" PointX="2.625" PointY="4.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="MySpaceDBModel.UnverifiedEmail" Width="1.5" PointX="4.625" PointY="2.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MySpaceDBModel.UnverifiedEmail" Width="1.5" PointX="0.5" PointY="7" IsExpanded="true" />
         <EntityTypeShape EntityType="MySpaceDBModel.User" Width="1.5" PointX="2.625" PointY="0.5" IsExpanded="true" />
         <EntityTypeShape EntityType="MySpaceDBModel.UserType" Width="1.5" PointX="0.625" PointY="2.375" IsExpanded="true" />
         <AssociationConnector Association="MySpaceDBModel.FK__Users__GenderId__34C8D9D1" ManuallyRouted="false" />
@@ -17,8 +17,14 @@
         <AssociationConnector Association="MySpaceDBModel.FK__Users__UserTypeI__35BCFE0A" ManuallyRouted="false" />
         <EntityTypeShape EntityType="MySpaceDBModel.Artist" Width="1.5" PointX="5.75" PointY="5.75" />
         <EntityTypeShape EntityType="MySpaceDBModel.FanLike" Width="1.5" PointX="7.75" PointY="0.75" />
-        <EntityTypeShape EntityType="MySpaceDBModel.Message" Width="1.5" PointX="0.75" PointY="7.75" />
-        <EntityTypeShape EntityType="MySpaceDBModel.Video" Width="1.5" PointX="2.75" PointY="7.75" />
+        <EntityTypeShape EntityType="MySpaceDBModel.Message" Width="1.5" PointX="3.625" PointY="6.125" />
+        <EntityTypeShape EntityType="MySpaceDBModel.Video" Width="1.5" PointX="1.875" PointY="7.25" />
+        <AssociationConnector Association="MySpaceDBModel.FK__Artists__UserId__3A4CA8FD" />
+        <AssociationConnector Association="MySpaceDBModel.FK__FanLikes__Artist__3C34F16F" />
+        <AssociationConnector Association="MySpaceDBModel.FK__Messages__Artist__3F115E1A" />
+        <AssociationConnector Association="MySpaceDBModel.FK__Videos__ArtistId__3D2915A8" />
+        <AssociationConnector Association="MySpaceDBModel.FK__FanLikes__UserId__3B40CD36" />
+        <AssociationConnector Association="MySpaceDBModel.FK__Messages__UserId__3E1D39E1" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

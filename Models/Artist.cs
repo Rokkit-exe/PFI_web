@@ -14,6 +14,14 @@ namespace MySpace.Models
     
     public partial class Artist
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Artist()
+        {
+            this.FanLikes = new HashSet<FanLike>();
+            this.Messages = new HashSet<Message>();
+            this.Videos = new HashSet<Video>();
+        }
+    
         public int Id { get; set; }
         public int UserId { get; set; }
         public string Name { get; set; }
@@ -22,5 +30,13 @@ namespace MySpace.Models
         public bool Approved { get; set; }
         public Nullable<int> Visits { get; set; }
         public Nullable<int> Likes { get; set; }
+    
+        public virtual User User { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<FanLike> FanLikes { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Message> Messages { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Video> Videos { get; set; }
     }
 }

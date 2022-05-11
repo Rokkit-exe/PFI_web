@@ -400,6 +400,13 @@ namespace MySpace.Models
             DB.SaveChanges();
             return true;
         }
+        public static Video Add_Video(this MySpaceDBEntities DB , Video video)
+        {
+            DB.Videos.Add(video);
+            DB.SaveChanges();
+            return video;
+
+        }
 
     }
 }

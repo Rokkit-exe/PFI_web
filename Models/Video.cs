@@ -19,5 +19,7 @@ namespace MySpace.Models
         public string Title { get; set; }
         public string YoutubeLink { get; set; }
         public System.DateTime Creation { get; set; }
+    
+        public virtual Artist Artist { get; set; }
     }
 }
