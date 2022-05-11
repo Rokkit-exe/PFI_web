@@ -32,5 +32,9 @@ namespace MySpace.Models
         public virtual DbSet<UnverifiedEmail> UnverifiedEmails { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<UserType> UserTypes { get; set; }
+        public virtual DbSet<Artist> Artists { get; set; }
+        public virtual DbSet<FanLike> FanLikes { get; set; }
+        public virtual DbSet<Message> Messages { get; set; }
+        public virtual DbSet<Video> Videos { get; set; }
     }
 }

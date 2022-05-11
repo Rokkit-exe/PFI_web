@@ -4,7 +4,29 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="MySpaceDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="MySpaceDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Artists">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="MainPhotoGUID" Type="varbinary" MaxLength="128" />
+          <Property Name="Description" Type="varchar" MaxLength="100" />
+          <Property Name="Approved" Type="bit" Nullable="false" />
+          <Property Name="Visits" Type="int" />
+          <Property Name="Likes" Type="int" />
+        </EntityType>
+        <EntityType Name="FanLikes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ArtistId" Type="int" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="Creation" Type="datetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="FriendShips">
           <Key>
             <PropertyRef Name="Id" />
@@ -31,6 +53,16 @@
           <Property Name="UserId" Type="int" Nullable="false" />
           <Property Name="LoginDate" Type="datetime" Nullable="false" />
           <Property Name="LogoutDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Messages">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ArtistId" Type="int" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="Text" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Creation" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="ResetPasswordCommands">
           <Key>
@@ -72,6 +104,16 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
+        <EntityType Name="Videos">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ArtistId" Type="int" Nullable="false" />
+          <Property Name="Title" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="YoutubeLink" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Creation" Type="datetime" Nullable="false" />
+        </EntityType>
         <Association Name="FK__Logins__UserId__38996AB5">
           <End Role="Users" Type="Self.Users" Multiplicity="1" />
           <End Role="Logins" Type="Self.Logins" Multiplicity="*" />
@@ -109,13 +151,17 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="MySpaceDBModelStoreContainer">
+          <EntitySet Name="Artists" EntityType="Self.Artists" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FanLikes" EntityType="Self.FanLikes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FriendShips" EntityType="Self.FriendShips" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Genders" EntityType="Self.Genders" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Logins" EntityType="Self.Logins" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Messages" EntityType="Self.Messages" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ResetPasswordCommands" EntityType="Self.ResetPasswordCommands" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UnverifiedEmails" EntityType="Self.UnverifiedEmails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserTypes" EntityType="Self.UserTypes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Videos" EntityType="Self.Videos" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK__Logins__UserId__38996AB5" Association="Self.FK__Logins__UserId__38996AB5">
             <End Role="Users" EntitySet="Users" />
             <End Role="Logins" EntitySet="Logins" />
@@ -129,8 +175,7 @@
             <End Role="Users" EntitySet="Users" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="MySpaceDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -263,7 +308,53 @@
             <End Role="UserTypes" EntitySet="UserTypes" />
             <End Role="Users" EntitySet="Users" />
           </AssociationSet>
+          <EntitySet Name="Artists" EntityType="MySpaceDBModel.Artist" />
+          <EntitySet Name="FanLikes" EntityType="MySpaceDBModel.FanLike" />
+          <EntitySet Name="Messages" EntityType="MySpaceDBModel.Message" />
+          <EntitySet Name="Videos" EntityType="MySpaceDBModel.Video" />
         </EntityContainer>
+        <EntityType Name="Artist">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="MainPhotoGUID" Type="Binary" MaxLength="128" FixedLength="false" />
+          <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Approved" Type="Boolean" Nullable="false" />
+          <Property Name="Visits" Type="Int32" />
+          <Property Name="Likes" Type="Int32" />
+        </EntityType>
+        <EntityType Name="FanLike">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ArtistId" Type="Int32" Nullable="false" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="Creation" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="Message">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ArtistId" Type="Int32" Nullable="false" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="Text" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Creation" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="Video">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ArtistId" Type="Int32" Nullable="false" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="YoutubeLink" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Creation" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -341,6 +432,52 @@
               <MappingFragment StoreEntitySet="UserTypes">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Artists">
+            <EntityTypeMapping TypeName="MySpaceDBModel.Artist">
+              <MappingFragment StoreEntitySet="Artists">
+                <ScalarProperty Name="Likes" ColumnName="Likes" />
+                <ScalarProperty Name="Visits" ColumnName="Visits" />
+                <ScalarProperty Name="Approved" ColumnName="Approved" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="MainPhotoGUID" ColumnName="MainPhotoGUID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FanLikes">
+            <EntityTypeMapping TypeName="MySpaceDBModel.FanLike">
+              <MappingFragment StoreEntitySet="FanLikes">
+                <ScalarProperty Name="Creation" ColumnName="Creation" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ArtistId" ColumnName="ArtistId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Messages">
+            <EntityTypeMapping TypeName="MySpaceDBModel.Message">
+              <MappingFragment StoreEntitySet="Messages">
+                <ScalarProperty Name="Creation" ColumnName="Creation" />
+                <ScalarProperty Name="Text" ColumnName="Text" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ArtistId" ColumnName="ArtistId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Videos">
+            <EntityTypeMapping TypeName="MySpaceDBModel.Video">
+              <MappingFragment StoreEntitySet="Videos">
+                <ScalarProperty Name="Creation" ColumnName="Creation" />
+                <ScalarProperty Name="YoutubeLink" ColumnName="YoutubeLink" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="ArtistId" ColumnName="ArtistId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

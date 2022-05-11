@@ -136,7 +136,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Artist.cs">
+      <DependentUpon>MySpaceDBEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\DBDAL.cs" />
+    <Compile Include="Models\FanLike.cs">
+      <DependentUpon>MySpaceDBEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\FriendShip.cs">
       <DependentUpon>MySpaceDBEntities.tt</DependentUpon>
     </Compile>
@@ -150,6 +156,9 @@
       <DependentUpon>MySpaceDBEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\LoginCredential.cs" />
+    <Compile Include="Models\Message.cs">
+      <DependentUpon>MySpaceDBEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\MySpaceDBEntities.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -181,6 +190,9 @@
       <DependentUpon>MySpaceDBEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\UserView.cs" />
+    <Compile Include="Models\Video.cs">
+      <DependentUpon>MySpaceDBEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
