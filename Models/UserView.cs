@@ -10,15 +10,15 @@ namespace MySpace.Models
     [MetadataType(typeof(UserView))]
     public partial class User
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public User()
-        {
-            CreationDate = DateTime.Now;
-            UserTypeId = 3; // User rights level
-            Verified = false;
-            Blocked = false;
-            Logins = new HashSet<Login>();
-        }
+        //[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        //public User()
+        //{
+        //    CreationDate = DateTime.Now;
+        //    /*UserTypeId = 3;*/ // User rights level
+        //    Verified = false;
+        //    Blocked = false;
+        //    Logins = new HashSet<Login>();
+        //}
 
         [NotMapped]
         public static ImageGUIDReference AvatarReference =
@@ -118,7 +118,7 @@ namespace MySpace.Models
 
         [Display(Name = "Date de création")]
         [DataType(DataType.Date)]
-        public DateTime CreationDate { get; set; }
+        public DateTime CreationDate { get; set; } = DateTime.Now;
     }
     public partial class UserClone
     {

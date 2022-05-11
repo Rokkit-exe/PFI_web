@@ -2,38 +2,46 @@
 {foreach (System.Web.Mvc.SelectListItem option in options.Items)
     {
         string id = name + "_" + option.Value;
-
-        if (option.Value == selectedValue.ToString())
+        if (option.Text != "Admin")
         {
-<input type="radio" name="@name" class="@name" id="@id" value="@option.Value" checked /> }
-                    else
-                    {
-<input type="radio" name="@name" class="@name" id="@id" value="@option.Value" /> }
-<label for="@id" class="control-label">@option.Text</label> }
-<br />
+            if (option.Value == selectedValue.ToString())
+            {
+                <input type="radio" name="@name" class="@name" id="@id" value="@option.Value" checked />
+            }
+            else
+            {
+                <input type="radio" name="@name" class="@name" id="@id" value="@option.Value" />
+
+            }
+            <label for="@id" class="control-label">@option.Text</label> }
+            <br />
+        }
+
 }
 
 @helper SelectList(string name, System.Web.Mvc.SelectList options, int selectedValue)
 {
-    <select class="form-control" id="@name" name="@name">
-        @foreach (System.Web.Mvc.SelectListItem option in options.Items)
+<select class="form-control" id="@name" name="@name">
+    @foreach (System.Web.Mvc.SelectListItem option in options.Items)
         {
             if (option.Value == selectedValue.ToString())
             {
-<option value="@option.Value" selected>@option.Text</option> }
+    <option value="@option.Value" selected>@option.Text</option>
+ }
                     else
                     {
-<option value="@option.Value">@option.Text</option>}
+    <option value="@option.Value">@option.Text</option>
+}
                 }
-    </select>
+</select>
 }
 
 @helper GlyphiconNoAction(string glyphiconClass, string TooltipMessage, string ToolTipPlacement = "bottom")
 {
-    <span class="glyphicon glyphiconStyle @glyphiconClass"
-          title="@TooltipMessage"
-          data-placement="@ToolTipPlacement">
-    </span>
+<span class="glyphicon glyphiconStyle @glyphiconClass"
+      title="@TooltipMessage"
+      data-placement="@ToolTipPlacement">
+</span>
 }
 
 @helper GlyphiconAction(string Action, string glyphiconClass, string TooltipMessage, string ToolTipPlacement = "bottom")
@@ -75,12 +83,12 @@
 @helper GlyphiconConfirmCommand(string url, string method, string glyphiconClass, string TooltipMessage, string ToolTipPlacement = "bottom")
 {glyphiconClass += " glyphicon-active";
                     string javascript = "function(result) { if (result) " + method + "('" + url + "') }";
-    <div onclick='bootbox.confirm("@TooltipMessage", @javascript)'>
-        <span class="glyphicon glyphiconStyle @glyphiconClass"
-              title="@TooltipMessage"
-              data-placement="bottom">
-        </span>
-    </div>
+<div onclick='bootbox.confirm("@TooltipMessage", @javascript)'>
+    <span class="glyphicon glyphiconStyle @glyphiconClass"
+          title="@TooltipMessage"
+          data-placement="bottom">
+    </span>
+</div>
 }
 
 @helper BoolToValue(bool b, string falseText = "non", string trueText = "oui")
@@ -102,15 +110,15 @@ else
                     DateTime localTime = date.Subtract(new TimeSpan((int)Session["TimeZoneOffset"], 0, 0));
                     if (span.Days > 0)
                     {
-    <div style="display:grid; grid-template-columns:auto 30px;">
-        <div>@localTime.ToLongDateString()&nbsp;</div>
-        <div class="glyphicon glyphicon-time smallGlyphicon" title="@localTime.ToShortTimeString()" data-placement="right"></div>
-    </div> }
+<div style="display:grid; grid-template-columns:auto 30px;">
+    <div>@localTime.ToLongDateString()&nbsp;</div>
+    <div class="glyphicon glyphicon-time smallGlyphicon" title="@localTime.ToShortTimeString()" data-placement="right"></div>
+</div> }
                     else
                     {
                         if (span.Hours > 1)
                         {
-    <span>Il y a @span.Hours heures</span> }
+<span>Il y a @span.Hours heures</span> }
 else
 {
     if (span.Minutes > 1)
@@ -153,7 +161,7 @@ else
          style="background: url(@avatarUrl) no-repeat center center; background-size: cover; float:left; border:1px solid black;"></div>
     <div class="ellipsis" style="float:none;color:dimgray">&nbsp;@user.GetFullName()</div>
 </div>
-                <br />
+<br />
 }
 
 @helper UsersCheckList(IEnumerable<MySpace.Models.User> users, List<int> selectedUsers, string usersCheckListName = "UsersCheckList")
@@ -166,14 +174,14 @@ else
         string chekBoxId = usersCheckListName + "_" + user.Id.ToString();
         if (selectedUsers.Contains(user.Id))
         {
-<input type="checkbox" name="@usersCheckListName" id="@chekBoxId" value="@user.Id" checked /> }
+    <input type="checkbox" name="@usersCheckListName" id="@chekBoxId" value="@user.Id" checked /> }
 else
 {
-<input type="checkbox" name="@usersCheckListName" id="@chekBoxId" value="@user.Id" /> }
-<label for="@chekBoxId" style=" height: 40px;">
-    <div class="smallAvatar" style="background: url(@avatarUrl) no-repeat center center; background-size: cover; float:left;"></div>
-    <div class="ellipsis" style="float:none;">&nbsp;@user.GetFullName()</div>
-</label>}
+    <input type="checkbox" name="@usersCheckListName" id="@chekBoxId" value="@user.Id" /> }
+    <label for="@chekBoxId" style=" height: 40px;">
+        <div class="smallAvatar" style="background: url(@avatarUrl) no-repeat center center; background-size: cover; float:left;"></div>
+        <div class="ellipsis" style="float:none;">&nbsp;@user.GetFullName()</div>
+    </label>}
 </div>
 }
 
@@ -200,7 +208,8 @@ else
 {var Url = new System.Web.Mvc.UrlHelper(HttpContext.Current.Request.RequestContext);
     if (checkStatus)
     {
-<img src="@Url.Content("~/Content/UI-icons/Accept.png")" class="small_icon" /> }
+<img src="@Url.Content("~/Content/UI-icons/Accept.png")" class="small_icon" />
+ }
                 else
                 {
 <div></div>}
@@ -241,12 +250,12 @@ else
 }
 
 @*@helper YoutubeThumbnail(MySpace.Models.Video video)
-{
-    string youtubeId = video.YoutubeId;
-    string youtubeLink = "https://www.youtube.com/watch?v=" + youtubeId;
-    string youtubeThumbnail = "http://img.youtube.com/vi/" + youtubeId + "/0.jpg";
-    <a href="@youtubeLink" target="_blank">
-        <h5 style="width:260px" class="ellipsis">@video.Title</h5>
-        <img class="youtubeThumbnail" src="@youtubeThumbnail" alt="" />
-    </a>
-}*@
+    {
+        string youtubeId = video.YoutubeId;
+        string youtubeLink = "https://www.youtube.com/watch?v=" + youtubeId;
+        string youtubeThumbnail = "http://img.youtube.com/vi/" + youtubeId + "/0.jpg";
+        <a href="@youtubeLink" target="_blank">
+            <h5 style="width:260px" class="ellipsis">@video.Title</h5>
+            <img class="youtubeThumbnail" src="@youtubeThumbnail" alt="" />
+        </a>
+    }*@

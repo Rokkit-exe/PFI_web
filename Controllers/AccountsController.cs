@@ -34,6 +34,7 @@ namespace MySpace.Controllers
         public ActionResult Subscribe()
         {
             ViewBag.Genders = SelectListItemConverter<Gender>.Convert(DB.Genders.ToList());
+            ViewBag.UserTypes = SelectListItemConverter<UserType>.Convert(DB.UserTypes.ToList());
             User user = new User();
             return View(user);
         }
@@ -47,6 +48,7 @@ namespace MySpace.Controllers
                 return RedirectToAction("SubscribeDone/" + user.Id.ToString());
             }
             ViewBag.Genders = SelectListItemConverter<Gender>.Convert(DB.Genders.ToList());
+            ViewBag.UserTypes = SelectListItemConverter<UserType>.Convert(DB.UserTypes.ToList());
             return View(user);
         }
         public ActionResult SubscribeDone(int id)

@@ -84,9 +84,11 @@ namespace MySpace.Models
         {
             user.SaveAvatar();
             user = DB.Users.Add(user);
+            user.CreationDate = DateTime.Now;
             DB.SaveChanges();
             DB.Entry(user).Reference(u => u.Gender).Load();
-            DB.Entry(user).Reference(u => u.UserType).Load(); OnlineUsers.RenewSerialNumber();
+            DB.Entry(user).Reference(u => u.UserType).Load(); 
+            OnlineUsers.RenewSerialNumber();
             return user;
         }
         public static User Update_User(this MySpaceDBEntities DB, User user)
