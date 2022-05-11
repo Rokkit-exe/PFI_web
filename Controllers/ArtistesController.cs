@@ -11,6 +11,27 @@ namespace MySpace.Controllers
     {
         MySpaceDBEntities DB = new MySpaceDBEntities();
         // GET: Artistes
+        public void RenewVideosSerialNumber()
+        {
+            HttpRuntime.Cache["VideosSerialNumber"] = Guid.NewGuid().ToString();
+        }
+        public string GetVideosSerialNumber()
+        {
+            if (HttpRuntime.Cache["VideosSerialNumber"] == null)
+            {
+                RenewVideosSerialNumber();
+            }
+            return (string)HttpRuntime.Cache["VideosSerialNumber"];
+        }
+        public void SetLocalVideosSerialNumber()
+        {
+            Session["VideosSerialNumber"] = GetVideosSerialNumber();
+        }
+        public bool IsVideosUpToDate()
+        {
+            return ((string)Session["VideosSerialNumber"] == (string)HttpRuntime.Cache["VideosSerialNumber"]);
+        }
+
         public ActionResult Index()
         {
             return View();
@@ -25,22 +46,17 @@ namespace MySpace.Controllers
         // GET: Artistes/Create
         public ActionResult Create()
         {
-            return View();
+            ViewBag.UserTypes = SelectListItemConverter<UserType>.Convert(DB.UserTypes.ToList());
+            return View(new Video());
         }
 
         // POST: Artistes/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(Video video)
         {
-            try
+            if (ModelState.IsValid)
             {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
+                AddVideo(video);
             }
         }
 
