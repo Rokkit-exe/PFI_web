@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'C:\Users\Louis\Documents\PFI_WEB_MASTER\PFI_web\Models\MySpaceDBEntities.edmx'. 
+﻿// T4 code generation is enabled for model 'C:\Users\franc\Documents\Programming\C# project\PFI_web\PFI_web\Models\MySpaceDBEntities.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

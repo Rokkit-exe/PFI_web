@@ -25,7 +25,7 @@ namespace MySpace.Models
         public int Id { get; set; }
         public int UserId { get; set; }
         public string Name { get; set; }
-        public byte[] MainPhotoGUID { get; set; }
+        public string MainPhotoGUID { get; set; }
         public string Description { get; set; }
         public bool Approved { get; set; }
         public Nullable<int> Visits { get; set; }

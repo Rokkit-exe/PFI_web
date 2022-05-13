@@ -409,6 +409,13 @@ namespace MySpace.Models
             return video;
 
         }
+        public static Video remove_video(this MySpaceDBEntities DB, Video video)
+        {
+            DB.Videos.Remove(video);
+            DB.SaveChanges();
+            return video;
+
+        }
 
         public static List<Video> Get_Video_Artist(this MySpaceDBEntities DB, int userId)
         {

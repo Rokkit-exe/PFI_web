@@ -4,26 +4,97 @@
     ViewBag.Title = "Page";
 }
 
-<h2>Page</h2>
-
 <div class="container">
-    <div>
-        <h3>@Model.Name</h3>
-    </div>
-    <div>
-        <span>@Model.Visits Visits</span>
-        <span>@Model.Likes Likes</span>
-        @*si le user est deja fan ou à deja like*@
-        <span class="glyphicon glyphicon-thumbs-down"></span>
-
-        @*si le user n'est pas deja fan / like'*@
-        <span class="glyphicon glyphicon-thumbs-up"></span>
-    </div>
-    
-    
-    
+    <fieldset style="border: solid black 1px" id="ArstistPageContainer" class="ArstistPageContainer">
+        @{Html.RenderAction("GetPage", new { id =Model.Id , forceRefresh = true }); }
+    </fieldset>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+
+
+
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/partialRefresh")
+
+<script defer>
+
+        let actionUrl = /Artistes/ + "GetPage?id=" + @Model.Id;
+        let partialRefresh = new PartialRefresh(actionUrl, "ArstistPageContainer", 5, postRefreshCallback);
+        $("#AddVideoForm").hide();
+        function postRefreshCallback() {
+            $("#AddVideo").click(function () {
+                $("#AddVideoForm").show();
+                $("#AddVideo").hide();
+                $(".DeleteVideo").hide();
+                partialRefresh.pause();
+            });
+            $("#AddMessage").click(function () {
+                $("#currentUserMessageForm").show();
+                $("#AddMessage").hide();
+                partialRefresh.pause();
+            });
+            $("#AcceptVideoLink").click(function () {
+                let title = $("#title").val();
+                let link = $("#youtubeLink").val();
+                if (title == "") {
+                    bootbox.alert("Veuillez entrer un titre");
+                } else {
+                    if (!validateYouTubeUrl(link)) {
+                        bootbox.alert("Veuillez entrer un lien youtube valide");
+                    } else {
+                        let artistId = $(this).attr("artistId");
+                        let url = /Artistes/ + "AddVideo?artistId=" + artistId + "&title=" + title + "&link=" + link;
+                        partialRefresh.command(url);
+                        partialRefresh.restart();
+                        $("#AddVideoForm").hide();
+                        $("#AddVideo").show();
+                        $(".DeleteVideo").show();
+                    }
+                }
+            })
+            $("#CancelAddVideo").click(function () {
+                partialRefresh.restart();
+                $("#AddVideoForm").hide();
+                $("#AddVideo").show();
+                $(".DeleteVideo").show();
+            })
+            $("#AcceptNewMessage").click(function () {
+                let message = $("#newMessage").val();
+                if (message == "") {
+                    bootbox.alert("Veuillez entrer un message");
+                } else {
+                    let artistId = $(this).attr("artistId");
+                    let url = /Artistes/ + "AddMessage?artistId=" + artistId + "&message=" + message;
+                    partialRefresh.command(url);
+                    $("#currentUserMessageForm").hide();
+                    $("#AddMessage").show();
+                    partialRefresh.restart();
+                }
+            });
+            $("#CancelAddMessage").click(function () {
+                $("#currentUserMessageForm").hide();
+                $("#AddMessage").show();
+                partialRefresh.restart();
+            });
+        }
+
+        function validateYouTubeUrl(url) {
+            if (url != undefined || url != '') {
+                var regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=|\?v=)([^#\&\?]*).*/;
+                var match = url.match(regExp);
+                if (match && match[2].length == 11) {
+                    return true;
+                }
+                return false;
+            }
+        }
+
+</script>
+}
+
+
+
+

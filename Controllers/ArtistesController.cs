@@ -41,9 +41,28 @@ namespace MySpace.Controllers
         public ActionResult Page(int id)
         {
             Artist artist = DB.Artists.Find(id);
-            ViewBag.isFan = isFan(artist);
-            ViewBag.isAdmin = isAdmin();
-            return View(artist);
+            if (artist != null)
+            {
+                SetLocalVideosSerialNumber();
+                return View(artist);
+            }
+
+
+            return null;
+        }
+        public PartialViewResult GetPage(int id, bool forceRefresh = false)
+        {
+            if (forceRefresh || !IsVideosUpToDate())
+            {
+                Artist artist = DB.Artists.Find(id);
+                ViewBag.isFan = isFan(artist);
+                ViewBag.isAdmin = isAdmin();
+                ViewBag.videos = DB.Videos.Where(v => v.ArtistId == id).ToList();
+                ViewBag.GUID = new ImageGUIDReference(@"/ImagesData/Photos/", @"No_image.png", true).GetURL(artist.MainPhotoGUID.ToString(), false);
+                SetLocalVideosSerialNumber();
+                return PartialView(artist);
+            }
+            return null;
         }
 
         public int isFan(Artist artist) => OnlineUsers.CurrentUserId == artist.UserId ? 
@@ -72,6 +91,7 @@ namespace MySpace.Controllers
                 return View();
             }
         }
+
         public ActionResult AddVideo(int artistId , string title , string link)
         {
             string youtubeId = "";
@@ -94,9 +114,21 @@ namespace MySpace.Controllers
 
                 };
                 DB.Add_Video(video);
+                RenewVideosSerialNumber();
             }
             return null;
             
+        }
+
+        public ActionResult RemoveVideo(int videoId)
+        {
+            Video video = DB.Videos.Find(videoId);
+            if (video != null)
+            {
+                DB.remove_video(video);
+                RenewVideosSerialNumber();
+            }
+            return null;
         }
     }
 }

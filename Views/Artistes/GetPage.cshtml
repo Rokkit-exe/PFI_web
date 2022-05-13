@@ -1,0 +1,58 @@
+﻿@model MySpace.Models.Artist
+@if (ViewBag.isAdmin == 1)
+{
+    <form>
+        <label>Approbation</label><input type="checkbox" value="@Model.Approved" />
+    </form>
+}
+
+<div>
+    <h3>@Model.Name</h3>
+</div>
+<div>
+    <span>@Model.Visits Visits</span>
+    <span>@Model.Likes Likes</span>
+    <form>
+        @if (ViewBag.isFan == 1)
+        {
+            <span class="glyphicon glyphicon-thumbs-down"></span>
+        }
+        else if (ViewBag.isFan == 0)
+        {
+            <span class="glyphicon glyphicon-thumbs-up"></span>
+        }
+    </form>
+    <div>
+        <span>
+            @Url.Content(ViewBag.GUID);
+        </span>
+        <span>
+            @Model.Description
+        </span>
+    </div>
+    <fieldset style="border: solid black 1px; margin-top: 10px">
+        <legend>
+            Vidéos Youtube
+            <span id="AddVideo" style="margin-left: 15px; color: green" title="Ajouter une video" class="glyphicon glyphiconStyle glyphicon-plus pointer"></span>
+        </legend>
+
+        <fieldset id="AddVideoForm" style="display: none; margin-top: 10px">
+            <legend>
+                Ajout d'un video youtube
+            </legend>
+            <input type="text" id="title" placeholder="Titre" />
+            <br />
+            <input type="text" id="youtubeLink" placeholder="Lien Youtube" />
+            <br />
+            <span id="AcceptVideoLink" artistId="@Model.Id" class="glyphicon glyphicon-ok glyphicon-green pointer glyphiconStyle"></span>
+            <span id="CancelAddVideo" class="glyphicon glyphicon-remove pointer glyphicon-red glyphiconStyle"></span>
+        </fieldset>
+        @foreach (MySpace.Models.Video video in (List<MySpace.Models.Video>)ViewBag.videos)
+        {
+            @Helper.YoutubeThumbnail(video)
+        }
+    </fieldset>
+    
+</div>
+    
+

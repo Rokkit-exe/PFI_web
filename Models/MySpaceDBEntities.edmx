@@ -12,7 +12,7 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="UserId" Type="int" Nullable="false" />
           <Property Name="Name" Type="varchar" MaxLength="30" Nullable="false" />
-          <Property Name="MainPhotoGUID" Type="varbinary" MaxLength="128" />
+          <Property Name="MainPhotoGUID" Type="varchar(max)" />
           <Property Name="Description" Type="varchar" MaxLength="100" />
           <Property Name="Approved" Type="bit" Nullable="false" />
           <Property Name="Visits" Type="int" />
@@ -114,42 +114,6 @@
           <Property Name="YoutubeLink" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="Creation" Type="datetime" Nullable="false" />
         </EntityType>
-        <Association Name="FK__Artists__UserId__3A4CA8FD">
-          <End Role="Users" Type="Self.Users" Multiplicity="1" />
-          <End Role="Artists" Type="Self.Artists" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Users">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Artists">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__FanLikes__Artist__3C34F16F">
-          <End Role="Artists" Type="Self.Artists" Multiplicity="1" />
-          <End Role="FanLikes" Type="Self.FanLikes" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Artists">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="FanLikes">
-              <PropertyRef Name="ArtistId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__FanLikes__UserId__3B40CD36">
-          <End Role="Users" Type="Self.Users" Multiplicity="1" />
-          <End Role="FanLikes" Type="Self.FanLikes" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Users">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="FanLikes">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK__Logins__UserId__38996AB5">
           <End Role="Users" Type="Self.Users" Multiplicity="1" />
           <End Role="Logins" Type="Self.Logins" Multiplicity="*" />
@@ -158,30 +122,6 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Logins">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Messages__Artist__3F115E1A">
-          <End Role="Artists" Type="Self.Artists" Multiplicity="1" />
-          <End Role="Messages" Type="Self.Messages" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Artists">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Messages">
-              <PropertyRef Name="ArtistId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Messages__UserId__3E1D39E1">
-          <End Role="Users" Type="Self.Users" Multiplicity="1" />
-          <End Role="Messages" Type="Self.Messages" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Users">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Messages">
               <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
@@ -210,18 +150,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Videos__ArtistId__3D2915A8">
-          <End Role="Artists" Type="Self.Artists" Multiplicity="1" />
-          <End Role="Videos" Type="Self.Videos" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Artists">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Videos">
-              <PropertyRef Name="ArtistId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="MySpaceDBModelStoreContainer">
           <EntitySet Name="Artists" EntityType="Self.Artists" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FanLikes" EntityType="Self.FanLikes" Schema="dbo" store:Type="Tables" />
@@ -234,29 +162,9 @@
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserTypes" EntityType="Self.UserTypes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Videos" EntityType="Self.Videos" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__Artists__UserId__3A4CA8FD" Association="Self.FK__Artists__UserId__3A4CA8FD">
-            <End Role="Users" EntitySet="Users" />
-            <End Role="Artists" EntitySet="Artists" />
-          </AssociationSet>
-          <AssociationSet Name="FK__FanLikes__Artist__3C34F16F" Association="Self.FK__FanLikes__Artist__3C34F16F">
-            <End Role="Artists" EntitySet="Artists" />
-            <End Role="FanLikes" EntitySet="FanLikes" />
-          </AssociationSet>
-          <AssociationSet Name="FK__FanLikes__UserId__3B40CD36" Association="Self.FK__FanLikes__UserId__3B40CD36">
-            <End Role="Users" EntitySet="Users" />
-            <End Role="FanLikes" EntitySet="FanLikes" />
-          </AssociationSet>
           <AssociationSet Name="FK__Logins__UserId__38996AB5" Association="Self.FK__Logins__UserId__38996AB5">
             <End Role="Users" EntitySet="Users" />
             <End Role="Logins" EntitySet="Logins" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Messages__Artist__3F115E1A" Association="Self.FK__Messages__Artist__3F115E1A">
-            <End Role="Artists" EntitySet="Artists" />
-            <End Role="Messages" EntitySet="Messages" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Messages__UserId__3E1D39E1" Association="Self.FK__Messages__UserId__3E1D39E1">
-            <End Role="Users" EntitySet="Users" />
-            <End Role="Messages" EntitySet="Messages" />
           </AssociationSet>
           <AssociationSet Name="FK__Users__GenderId__34C8D9D1" Association="Self.FK__Users__GenderId__34C8D9D1">
             <End Role="Genders" EntitySet="Genders" />
@@ -265,10 +173,6 @@
           <AssociationSet Name="FK__Users__UserTypeI__35BCFE0A" Association="Self.FK__Users__UserTypeI__35BCFE0A">
             <End Role="UserTypes" EntitySet="UserTypes" />
             <End Role="Users" EntitySet="Users" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Videos__ArtistId__3D2915A8" Association="Self.FK__Videos__ArtistId__3D2915A8">
-            <End Role="Artists" EntitySet="Artists" />
-            <End Role="Videos" EntitySet="Videos" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -443,7 +347,7 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="UserId" Type="Int32" Nullable="false" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="MainPhotoGUID" Type="Binary" MaxLength="128" FixedLength="false" />
+          <Property Name="MainPhotoGUID" Type="Binary" MaxLength="Max" FixedLength="false" />
           <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="Approved" Type="Boolean" Nullable="false" />
           <Property Name="Visits" Type="Int32" />
