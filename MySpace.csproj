@@ -307,6 +307,7 @@
     <Content Include="Views\FriendShips\GetFriendShipsStatus.cshtml" />
     <Content Include="Views\FriendShips\Index.cshtml" />
     <Content Include="Views\Artistes\Index.cshtml" />
+    <Content Include="Views\Artistes\Page.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Data\" />

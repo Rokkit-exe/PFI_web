@@ -34,14 +34,22 @@ namespace MySpace.Controllers
 
         public ActionResult Index()
         {
-            return View(DB.Artists);
+            return View(DB.Artists.Where(a => a.Approved).ToList());
         }
 
-        // GET: Artistes/Details/5
+        // GET: Artistes/Page/5
         public ActionResult Page(int id)
         {
-            return View(DB.Artists.Where(a => a.Id == id).FirstOrDefault());
+            Artist artist = DB.Artists.Find(id);
+            ViewBag.isFan = isFan(artist);
+            ViewBag.isAdmin = isAdmin();
+            return View(artist);
         }
+
+        public int isFan(Artist artist) => OnlineUsers.CurrentUserId == artist.UserId ? 
+            -1 : DB.FanLikes.Where(a => a.UserId == OnlineUsers.CurrentUserId && a.ArtistId == artist.Id).FirstOrDefault() != null ? 1 : 0;
+
+        public int isAdmin() => DB.Users.Find(OnlineUsers.CurrentUserId).UserTypeId == 1 ? 1 : 0;
 
         // GET: Artistes/Delete/5
         public ActionResult Delete(int id)

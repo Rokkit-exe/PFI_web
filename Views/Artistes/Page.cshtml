@@ -1,0 +1,29 @@
+﻿@model MySpace.Models.Artist
+
+@{
+    ViewBag.Title = "Page";
+}
+
+<h2>Page</h2>
+
+<div class="container">
+    <div>
+        <h3>@Model.Name</h3>
+    </div>
+    <div>
+        <span>@Model.Visits Visits</span>
+        <span>@Model.Likes Likes</span>
+        @*si le user est deja fan ou à deja like*@
+        <span class="glyphicon glyphicon-thumbs-down"></span>
+
+        @*si le user n'est pas deja fan / like'*@
+        <span class="glyphicon glyphicon-thumbs-up"></span>
+    </div>
+    
+    
+    
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
