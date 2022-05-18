@@ -270,7 +270,9 @@ namespace MySpace.Controllers
         public ActionResult Login(string message)
         {
             ViewBag.Message = message;
+            HttpContext.Session["visites"] = new List<int>();
             return View(new LoginCredential());
+            
         }
 
         [HttpPost]

@@ -18,22 +18,15 @@
     <span>@Model.Visits Visits</span>
     <span>@Model.Likes Likes</span>
    
-    <h4 class="glyphicon glyphicon-thumbs-down" title="S'abonner" id="like" artisteId="@Model.Id">
-    </h4>
-    <form>
         @if (ViewBag.isFan == 1)
         {
-            <h4 class="glyphicon glyphicon-thumbs-down" title="S'abonner" id="like" artisteId="@Model.Id">
-            </h4>
+            <h4 class="glyphicon glyphicon-thumbs-down" title="S'abonner" id="like" artisteId="@Model.Id"></h4>
         }
         else if (ViewBag.isFan == 0)
         {
-            <h4 class="glyphicon glyphicon-thumbs-up" title="S'abonner" id="like" artisteId="@Model.Id">
-            </h4>
+            <h4 class="glyphicon glyphicon-thumbs-up" title="S'abonner" id="like" artisteId="@Model.Id"></h4>
         }
-    </form>
     <div>
-
         <img class="photo" src="@Url.Content(Model.GetUrl(false))" />
         <span>
             @Model.Description

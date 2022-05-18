@@ -148,8 +148,6 @@ namespace MySpace.Controllers
                         break;
                     default:
                         break;
-
-                        
                 }
                 SetLocalArtistSerialNumber();
                 return PartialView(artistes.Where(a => a.Approved).ToList());
@@ -181,10 +179,29 @@ namespace MySpace.Controllers
                 ViewBag.videos = DB.Videos.Where(v => v.ArtistId == id).ToList();
                 ViewBag.messages = DB.Messages.Where(v => v.ArtistId == id).ToList();
                 ViewBag.GUID = new ImageGUIDReference(@"/ImagesData/Photos/", @"No_image.png", true).GetURL(artist.MainPhotoGUID.ToString(), false);
+
+                // visite
+
+
+                HandleVisits(artist, id);
+
+                
                 SetLocalVideosSerialNumber();
                 return PartialView(artist);
             }
             return null;
+        }
+
+        public void HandleVisits(Artiste artiste, int id)
+        {
+            var visites = (List<int>)HttpContext.Session["visites"];
+            if (!visites.Contains(id) && IsFan(artiste) != -1)
+            {
+                visites.Add(id);
+                artiste.Visits++;
+                DB.SaveChanges();
+            }
+            HttpContext.Session["visites"] = visites;
         }
 
         public int IsFan(Artiste artist) => OnlineUsers.CurrentUserId == artist.UserId ? 
@@ -314,9 +331,9 @@ namespace MySpace.Controllers
                 {
                     if(likes.UserId == currentUserId)
                     {
-
-                        artiste.FanLikes.Remove(likes);
+                        DB.FanLikes.Remove(likes);
                         artiste.Likes--;
+                        DB.SaveChanges();
                         return null;
                     }
                     
