@@ -405,6 +405,11 @@ namespace MySpace.Models
         public static Video Add_Video(this MySpaceDBEntities DB , Video video)
         {
             DB.Videos.Add(video);
+            Artiste artiste = DB.Artistes.Find(video.ArtistId);
+            if(artiste != null)
+            {
+                Artiste
+            }
             DB.SaveChanges();
             return video;
 
@@ -431,6 +436,21 @@ namespace MySpace.Models
             OnlineUsers.RenewSerialNumber();
             return artiste;
         }
+        public static Message Add_Message(this MySpaceDBEntities DB, Message message)
+        {
+            DB.Messages.Add(message);
+            DB.SaveChanges();
+            return message;
+
+        }
+        public static Message Delete_Message(this MySpaceDBEntities DB, Message message)
+        {
+            DB.Messages.Remove(message);
+            DB.SaveChanges();
+            return message;
+
+        }
+
 
     }
 }

@@ -55,9 +55,11 @@ namespace MySpace.Controllers
             if (forceRefresh || !IsVideosUpToDate())
             {
                 Artiste artist = DB.Artistes.Find(id);
+                ViewBag.currentUserId = OnlineUsers.CurrentUserId;
                 ViewBag.isFan = isFan(artist);
                 ViewBag.isAdmin = isAdmin();
                 ViewBag.videos = DB.Videos.Where(v => v.ArtistId == id).ToList();
+                ViewBag.messages = DB.Messages.Where(v => v.ArtistId == id).ToList();
                 ViewBag.GUID = new ImageGUIDReference(@"/ImagesData/Photos/", @"No_image.png", true).GetURL(artist.MainPhotoGUID.ToString(), false);
                 SetLocalVideosSerialNumber();
                 return PartialView(artist);
@@ -145,6 +147,40 @@ namespace MySpace.Controllers
             }
             
             return View(artiste);
+        }
+        public ActionResult AddMessage(int artistId, string message)
+        {
+            Artiste artiste = DB.Artistes.Find(artistId);
+            User user = DB.Users.Find(OnlineUsers.CurrentUserId);
+                if(artiste != null)
+                {
+
+                    Message newMessage = new Message
+                    {
+                        Artiste = artiste,
+                        ArtistId = artiste.Id,
+                        Creation = DateTime.Now,
+                        Text = message,
+                        User = user,
+                        UserId = user.Id
+
+                    };
+                    DB.Add_Message(newMessage);
+                    RenewVideosSerialNumber();
+                }
+            return null;
+           
+        }
+        public ActionResult DeleteMessage(int messageId)
+        {
+            Message message = DB.Messages.Find(messageId);
+
+            if(message != null)
+            {
+                DB.Delete_Message(message);
+                RenewVideosSerialNumber();
+            }
+            return null;
         }
     }
 }

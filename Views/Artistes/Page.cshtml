@@ -79,6 +79,16 @@
                 $("#AddMessage").show();
                 partialRefresh.restart();
             });
+            $("#DeleteMessage").click(function () {
+                let messageId = $(this).attr("messageId");
+                if (messageId == "") {
+                    bootbox.alert("Veuillez entrer un message");
+                } else {
+                    let url = /Artistes/ + "DeleteMessage?messageId=" + messageId;
+                    partialRefresh.command(url);
+                    partialRefresh.restart();
+                }
+            });
         }
 
         function validateYouTubeUrl(url) {
