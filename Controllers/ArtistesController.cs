@@ -132,13 +132,15 @@ namespace MySpace.Controllers
         }
         public ActionResult Profil()
         {
-            Artiste artiste = DB.Artistes.Find(OnlineUsers.CurrentUserId);
+            Artiste artiste = DB.Artistes.Where(A => A.UserId == OnlineUsers.CurrentUserId).FirstOrDefault();
             return View(artiste);
         }
 
         [HttpPost]
         public ActionResult Profil(Artiste artiste)
         {
+            artiste.User = DB.Users.Find(OnlineUsers.CurrentUserId);
+            artiste.MainPhotoGUID = "/ImagesData/Avatars/no_avatar.png";
             if (ModelState.IsValid)
             { 
                 artiste = DB.Update_Artiste(artiste);
