@@ -19,7 +19,7 @@ namespace MySpace.Models
         public int UserId { get; set; }
         public System.DateTime Creation { get; set; }
     
-        public virtual Artist Artist { get; set; }
         public virtual User User { get; set; }
+        public virtual Artiste Artiste { get; set; }
     }
 }

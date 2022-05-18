@@ -153,7 +153,7 @@
     </a>
 }
 
-@helper AvatarProfilLink(MySpace.Models.Artist artist)
+@helper AvatarProfilLink(MySpace.Models.Artiste artist)
 {var Url = new System.Web.Mvc.UrlHelper(HttpContext.Current.Request.RequestContext);
     var avatarUrl = Url.Content(artist.User.GetAvatarURL());
     var linkUrl = Url.Action("Page/"+artist.Id, "Artistes");

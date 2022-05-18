@@ -419,8 +419,17 @@ namespace MySpace.Models
 
         public static List<Video> Get_Video_Artist(this MySpaceDBEntities DB, int userId)
         {
-            Artist Artist = DB.Artists.Where(a => a.UserId == userId).FirstOrDefault();
+            Artiste Artist = DB.Artistes.Where(a => a.UserId == userId).FirstOrDefault();
             return DB.Videos.Where(v => v.ArtistId == Artist.Id).ToList();
+        }
+        public static Artiste Update_Artiste(this MySpaceDBEntities DB, Artiste artiste)
+        {
+            artiste.Save();
+            DB.Entry(artiste).State = EntityState.Modified;
+            DB.SaveChanges();
+  
+            OnlineUsers.RenewSerialNumber();
+            return artiste;
         }
 
     }

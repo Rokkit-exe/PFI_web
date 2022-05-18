@@ -1,4 +1,4 @@
-﻿@model MySpace.Models.Artist
+﻿@model MySpace.Models.Artiste
 
 @{
     ViewBag.Title = "Page";
@@ -6,7 +6,7 @@
 
 <div class="container">
     <fieldset style="border: solid black 1px" id="ArstistPageContainer" class="ArstistPageContainer">
-        @{Html.RenderAction("GetPage", new { id =Model.Id , forceRefresh = true }); }
+        @{Html.RenderAction("GetPage", new { id = Model.Id , forceRefresh = true }); }
     </fieldset>
 </div>
 

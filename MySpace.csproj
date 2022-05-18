@@ -139,9 +139,10 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\Artist.cs">
+    <Compile Include="Models\Artiste.cs">
       <DependentUpon>MySpaceDBEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ArtisteView.cs" />
     <Compile Include="Models\DBDAL.cs" />
     <Compile Include="Models\FanLike.cs">
       <DependentUpon>MySpaceDBEntities.tt</DependentUpon>
@@ -230,6 +231,7 @@
     <Content Include="ImagesData\Avatars\f201b2e7-e332-4e65-988d-6456d3307201.Jpeg" />
     <Content Include="ImagesData\Avatars\no_avatar.png" />
     <Content Include="ImagesData\Loading_icon.gif" />
+    <Content Include="ImagesData\Photos\no_image.png" />
     <Content Include="Models\MySpaceDBEntities.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>MySpaceDBEntities.Context.cs</LastGenOutput>
@@ -309,6 +311,7 @@
     <Content Include="Views\Artistes\Index.cshtml" />
     <Content Include="Views\Artistes\Page.cshtml" />
     <Content Include="Views\Artistes\GetPage.cshtml" />
+    <Content Include="Views\Artistes\Profil.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Data\" />

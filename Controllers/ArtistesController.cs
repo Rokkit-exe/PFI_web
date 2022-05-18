@@ -34,13 +34,13 @@ namespace MySpace.Controllers
 
         public ActionResult Index()
         {
-            return View(DB.Artists.Where(a => a.Approved).ToList());
+            return View(DB.Artistes.Where(a => a.Approved).ToList());
         }
 
         // GET: Artistes/Page/5
         public ActionResult Page(int id)
         {
-            Artist artist = DB.Artists.Find(id);
+            Artiste artist = DB.Artistes.Find(id);
             if (artist != null)
             {
                 SetLocalVideosSerialNumber();
@@ -54,7 +54,7 @@ namespace MySpace.Controllers
         {
             if (forceRefresh || !IsVideosUpToDate())
             {
-                Artist artist = DB.Artists.Find(id);
+                Artiste artist = DB.Artistes.Find(id);
                 ViewBag.isFan = isFan(artist);
                 ViewBag.isAdmin = isAdmin();
                 ViewBag.videos = DB.Videos.Where(v => v.ArtistId == id).ToList();
@@ -65,7 +65,7 @@ namespace MySpace.Controllers
             return null;
         }
 
-        public int isFan(Artist artist) => OnlineUsers.CurrentUserId == artist.UserId ? 
+        public int isFan(Artiste artist) => OnlineUsers.CurrentUserId == artist.UserId ? 
             -1 : DB.FanLikes.Where(a => a.UserId == OnlineUsers.CurrentUserId && a.ArtistId == artist.Id).FirstOrDefault() != null ? 1 : 0;
 
         public int isAdmin() => DB.Users.Find(OnlineUsers.CurrentUserId).UserTypeId == 1 ? 1 : 0;
@@ -129,6 +129,22 @@ namespace MySpace.Controllers
                 RenewVideosSerialNumber();
             }
             return null;
+        }
+        public ActionResult Profil()
+        {
+            Artiste artiste = DB.Artistes.Find(OnlineUsers.CurrentUserId);
+            return View(artiste);
+        }
+
+        [HttpPost]
+        public ActionResult Profil(Artiste artiste)
+        {
+            if (ModelState.IsValid)
+            { 
+                artiste = DB.Update_Artiste(artiste);
+            }
+            
+            return View(artiste);
         }
     }
 }
