@@ -445,6 +445,26 @@ namespace MySpace.Models
             return message;
 
         }
+        public static List<Artiste> SearchArtistByName(List<Artiste> artistes, string name)
+        {
+            List<Artiste> filteredArtistes = new List<Artiste>();
+
+            foreach (var artiste in artistes)
+            {
+                string artisteName = artiste.Name.ToLower();
+                bool containsAllTags = true;
+             
+                if (!artisteName.Contains(name))
+                {
+                    containsAllTags = false;
+                    break;
+                }
+     
+                if (containsAllTags)
+                    filteredArtistes.Add(artiste);
+            }
+            return filteredArtistes;
+        }
 
 
     }

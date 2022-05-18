@@ -1,6 +1,10 @@
-﻿@model MySpace.Models.Artiste
+﻿@model IEnumerable<MySpace.Models.Artiste>
 
-
+@{
+    string sortDatesIconColor = ((string)Session["ArtistFieldToSort"] == "dates" ? "blue" : "gray");
+    string sortUsersIconColor = ((string)Session["ArtistFieldToSort"] == "users" ? "blue" : "gray");
+    string sortRatingsIconColor = ((string)Session["ArtistFieldToSort"] == "ratings" ? "blue" : "gray");
+}
 @foreach (var item in Model)
 {
     <tr>

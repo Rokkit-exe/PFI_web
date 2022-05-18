@@ -51,20 +51,110 @@ namespace MySpace.Controllers
         {
             return ((string)Session["VideosSerialNumber"] == (string)HttpRuntime.Cache["VideosSerialNumber"]);
         }
+        public void InitSortArtist()
+        {
+            if (Session["ArtistFieldToSort"] == null)
+                Session["ArtistFieldToSort"] = "dates"; // "users", "ratings"
+            if (Session["ArtistFieldToSortDir"] == null)
+                Session["ArtistFieldToSortDir"] = false; // ascendant
+        }
+
+
+
+        public void InitSearchByName()
+        {
+            if (Session["name"] == null)
+                Session["name"] = "";
+        }
+
+        public ActionResult SetSearchArtistName(string name)
+        {
+            Session["name"] = name.Trim().ToLower();
+            RenewArtistSerialNumber();
+            return null;
+        }
+
+        public ActionResult SortArtistsBy(string fieldToSort)
+        {
+            RenewArtistSerialNumber();
+            if ((string)Session["ArtistFieldToSort"] == fieldToSort)
+            {
+                Session["ArtistFieldToSortDir"] = !(bool)Session["ArtistFieldToSortDir"];
+            }
+            else
+            {
+                Session["ArtistFieldToSort"] = fieldToSort;
+                Session["ArtistFieldToSortDir"] = true;
+            }
+            return null;
+        }
+
+        public ActionResult ViewArtistLayout(bool list)
+        {
+            if (list)
+            {
+
+            }
+            return null;
+        }
 
         public ActionResult Index()
         {
+            InitSortArtist();
+            InitSearchByName();
             SetLocalVideosSerialNumber();
             return View();
         }
         public ActionResult GetArtistsList(bool forceRefresh = false)
         {
+            List<Artiste> artistes = DB.Artistes.ToList();
             if (forceRefresh || !IsArtistUpToDate())
             {
+                
+                string name = (string)Session["name"];
+                if (name != "" || name != null)
+                    artistes = DBDAL.SearchArtistByName(artistes, name);
+                switch ((string)Session["ArtistFieldToSort"])
+                {
+                    case "names":
+                        if ((bool)Session["ArtistFieldToSortDir"])
+                        {
+                            artistes = artistes.OrderBy(pr => pr.Name).ToList();
+                        }
+                        else
+                        {
+                            artistes = artistes.OrderByDescending(pr => pr.Name).ToList();
+                        }
+                        break;
+                    case "vues":
+                        if ((bool)Session["ArtistFieldToSortDir"])
+                        {
+                            artistes = artistes.OrderBy(pr => pr.Visits).ThenBy(pr => pr.User.LastName).ToList();
+                        }
+                        else
+                        {
+                            artistes = artistes.OrderByDescending(pr => pr.Visits).ThenByDescending(pr => pr.User.LastName).ToList();
+                        }
+                        break;
+                    case "likes":
+                        if ((bool)Session["ArtistFieldToSortDir"])
+                        {
+                            artistes = artistes.OrderBy(pr => pr.Likes).ToList();
+                        }
+                        else
+                        {
+                            artistes = artistes.OrderByDescending(pr => pr.Likes).ToList();
+                        }
+                        break;
+                    default:
+                        break;
+
+                        
+                }
                 SetLocalArtistSerialNumber();
-                return PartialView(DB.Artistes.Where(a => a.Approved).ToList());
+                return PartialView(artistes.Where(a => a.Approved).ToList());
             }
-            return null;
+            return PartialView(artistes.Where(a => a.Approved).ToList());
         }
 
         // GET: Artistes/Page/5
