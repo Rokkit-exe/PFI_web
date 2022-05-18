@@ -11,6 +11,26 @@ namespace MySpace.Controllers
     {
         MySpaceDBEntities DB = new MySpaceDBEntities();
         // GET: Artistes
+        public void RenewArtistSerialNumber()
+        {
+            HttpRuntime.Cache["ArtistSerialNumber"] = Guid.NewGuid().ToString();
+        }
+        public string GetArtistSerialNumber()
+        {
+            if (HttpRuntime.Cache["ArtistSerialNumber"] == null)
+            {
+                RenewArtistSerialNumber();
+            }
+            return (string)HttpRuntime.Cache["ArtistSerialNumber"];
+        }
+        public void SetLocalArtistSerialNumber()
+        {
+            Session["ArtistSerialNumber"] = GetArtistSerialNumber();
+        }
+        public bool IsArtistUpToDate()
+        {
+            return ((string)Session["ArtistSerialNumber"] == (string)HttpRuntime.Cache["ArtistSerialNumber"]);
+        }
         public void RenewVideosSerialNumber()
         {
             HttpRuntime.Cache["VideosSerialNumber"] = Guid.NewGuid().ToString();
@@ -34,7 +54,17 @@ namespace MySpace.Controllers
 
         public ActionResult Index()
         {
-            return View(DB.Artistes.Where(a => a.Approved).ToList());
+            SetLocalVideosSerialNumber();
+            return View();
+        }
+        public ActionResult GetArtistsList(bool forceRefresh = false)
+        {
+            if (forceRefresh || !IsArtistUpToDate())
+            {
+                SetLocalArtistSerialNumber();
+                return PartialView(DB.Artistes.Where(a => a.Approved).ToList());
+            }
+            return null;
         }
 
         // GET: Artistes/Page/5
@@ -182,5 +212,6 @@ namespace MySpace.Controllers
             }
             return null;
         }
+        
     }
 }

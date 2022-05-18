@@ -312,6 +312,7 @@
     <Content Include="Views\Artistes\Page.cshtml" />
     <Content Include="Views\Artistes\GetPage.cshtml" />
     <Content Include="Views\Artistes\Profil.cshtml" />
+    <Content Include="Views\Artistes\GetArtistsList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Data\" />

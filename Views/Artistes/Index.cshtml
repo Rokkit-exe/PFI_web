@@ -6,14 +6,41 @@
 
 <h2>Gallerie des Artistes</h2>
 
-<table class="table">
+<table class="table" id="ArtistListContainer">
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Helper.AvatarProfilLink(item)
-        </td>
-    </tr>
-}
+    @{Html.RenderAction("GetArtistsList", new {forceRefresh = true })}
 
 </table>
+@section Scripts {
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/partialRefresh")
+    <script defer>
+        let partialRefresh = new PartialRefresh("/Artists/GetArtistsList", "ArtistListContainer", 5, postRefreshCallBacks);
+        function postRefreshCallBacks() {
+            $("#searchByName").change(function () {
+                let url = /Artists/ + "SetSearchArtistName?name=" + $("#searchByName").val();
+                partialRefresh.command(url);
+            });
+            $("#searchByName").focus(function () {
+                partialRefresh.pause();
+                console.log("paused");
+            });
+            $("#searchByName").focusout(function () {
+                partialRefresh.restart();
+                console.log("restarted");
+            });
+            $('#doSearch').mouseup(function () {
+                let url = /Artists/ + "SetSearchArtistName?name=" + $("#searchByName").val();
+                partialRefresh.command(url);
+            });
+            $(".sortArtists").click(function () {
+                $(".sortArtists").css("color", "black");
+                let url = /Artists/ + "SortArtistsBy?fieldToSort=" + $(this).attr("fieldToSort");
+                partialRefresh.command(url);
+            });
+        }
+
+    </script>
+    }

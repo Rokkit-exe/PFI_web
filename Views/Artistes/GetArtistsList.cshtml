@@ -1,0 +1,11 @@
+﻿@model MySpace.Models.Artiste
+
+
+@foreach (var item in Model)
+{
+    <tr>
+        <td>
+            @Helper.AvatarProfilLink(item)
+        </td>
+    </tr>
+}
