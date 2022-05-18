@@ -465,7 +465,15 @@ namespace MySpace.Models
             }
             return filteredArtistes;
         }
+        public static FanLike Add_Like(this MySpaceDBEntities DB, FanLike fanLike)
+        {
+            DB.FanLikes.Add(fanLike);
+            fanLike.Artiste.Likes++;
+            DB.SaveChanges();
+            return fanLike;
 
+        }
+        
 
     }
 }

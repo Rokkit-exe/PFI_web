@@ -176,8 +176,8 @@ namespace MySpace.Controllers
             {
                 Artiste artist = DB.Artistes.Find(id);
                 ViewBag.currentUserId = OnlineUsers.CurrentUserId;
-                ViewBag.isFan = isFan(artist);
-                ViewBag.isAdmin = isAdmin();
+                ViewBag.isFan = IsFan(artist);
+                ViewBag.isAdmin = IsAdmin();
                 ViewBag.videos = DB.Videos.Where(v => v.ArtistId == id).ToList();
                 ViewBag.messages = DB.Messages.Where(v => v.ArtistId == id).ToList();
                 ViewBag.GUID = new ImageGUIDReference(@"/ImagesData/Photos/", @"No_image.png", true).GetURL(artist.MainPhotoGUID.ToString(), false);
@@ -187,10 +187,10 @@ namespace MySpace.Controllers
             return null;
         }
 
-        public int isFan(Artiste artist) => OnlineUsers.CurrentUserId == artist.UserId ? 
+        public int IsFan(Artiste artist) => OnlineUsers.CurrentUserId == artist.UserId ? 
             -1 : DB.FanLikes.Where(a => a.UserId == OnlineUsers.CurrentUserId && a.ArtistId == artist.Id).FirstOrDefault() != null ? 1 : 0;
 
-        public int isAdmin() => DB.Users.Find(OnlineUsers.CurrentUserId).UserTypeId == 1 ? 1 : 0;
+        public int IsAdmin() => DB.Users.Find(OnlineUsers.CurrentUserId).UserTypeId == 1 ? 1 : 0;
 
         // GET: Artistes/Delete/5
         public ActionResult Delete(int id)
@@ -304,6 +304,38 @@ namespace MySpace.Controllers
             }
             return null;
         }
-        
+        public ActionResult AddRemoveLike(int artistId)
+        {
+            Artiste artiste = DB.Artistes.Find(artistId);
+            int currentUserId = OnlineUsers.CurrentUserId;
+            if(artiste != null)
+            {
+                foreach(FanLike likes in artiste.FanLikes)
+                {
+                    if(likes.UserId == currentUserId)
+                    {
+
+                        artiste.FanLikes.Remove(likes);
+                        artiste.Likes--;
+                        return null;
+                    }
+                    
+                }
+                FanLike newLike = new FanLike
+                {
+                    Artiste = artiste,
+                    ArtistId = artiste.Id,
+                    Creation = DateTime.Now,
+                    User = DB.Users.Find(currentUserId),
+                    UserId = currentUserId
+                };
+                DB.Add_Like(newLike);
+                RenewVideosSerialNumber();
+                
+            }
+            return null;
+        }
+
+
     }
 }

@@ -89,6 +89,11 @@
                     partialRefresh.restart();
                 }
             });
+            $("#like").click(function () {
+                artistId = $(this).attr("artisteId");
+                partialRefresh.confirmedCommand("S'abonner ?", "/Artistes/AddRemoveLike?artistId=" + artistId);
+                partialRefresh.restart();
+            });
         }
 
         function validateYouTubeUrl(url) {
