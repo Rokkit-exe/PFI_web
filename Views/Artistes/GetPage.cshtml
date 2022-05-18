@@ -8,7 +8,7 @@
 
 @if (ViewBag.isFan == -1)
 {
-    @Helper.GlyphiconAction("Profil", "glyphicon-edit", "");
+    @Helper.GlyphiconAction("Profil", "glyphicon-edit" , "");
 } 
 
 <div>
@@ -28,8 +28,8 @@
         }
     </form>
     <div>
-        
-        <img class="photo" src="@Url.Content(Model.GetUrl(false))" />        
+
+        <img class="photo" src="@Url.Content(Model.GetUrl(false))" />
         <span>
             @Model.Description
         </span>
@@ -55,8 +55,34 @@
         {
             @Helper.YoutubeThumbnail(video)
         }
+
     </fieldset>
-    
+    <fieldset style="border: solid black 1px; margin-top: 10px">
+        <legend>
+            Messages
+            <span id="AddMessage" style="margin-left: 15px; color: blue" title="Ajouter un message" class="glyphicon glyphiconStyle glyphicon-plus pointer"></span>
+        </legend>
+
+        <fieldset id="currentUserMessageForm" style="display: none; margin-top: 10px">
+            <legend>
+                Ajout d'un message
+            </legend>
+            <input type="text" id="newMessage" placeholder="votre message" />
+            <br />
+            <span id="AcceptNewMessage" artistId="@Model.Id" class="glyphicon glyphicon-ok glyphicon-green pointer glyphiconStyle"></span>
+            <span id="CancelAddMessage" class="glyphicon glyphicon-remove pointer glyphicon-red glyphiconStyle"></span>
+        </fieldset>
+        @foreach (MySpace.Models.Message message in (List<MySpace.Models.Message>)ViewBag.messages)
+        {
+            @Helper.AvatarProfilLink(message.User) <span>@message.Creation</span>
+            if (ViewBag.user == message.UserId)
+            {
+                <span id="DeleteMessage" class="glyphicon glyphicon-remove pointer glyphicon-red glyphiconStyle" messageId="@message.Id"></span>
+            }
+            <span>@message.Text</span>
+        }
+    </fieldset>
+
 </div>
     
 
