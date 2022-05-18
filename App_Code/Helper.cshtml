@@ -156,16 +156,29 @@
 @helper AvatarProfilLink(MySpace.Models.Artiste artist)
 {var Url = new System.Web.Mvc.UrlHelper(HttpContext.Current.Request.RequestContext);
     var avatarUrl = Url.Content(artist.User.GetAvatarURL());
-    var linkUrl = Url.Action("Page/"+artist.Id, "Artistes");
-<div >
-    <a href="@linkUrl" data-toogle="tooltip" title="Modifier le profil" style="margin-left: 2rem">
-        <div class="smallAvatar"
-             style="background: url(@avatarUrl) no-repeat center center; background-size: cover;"></div>
-        <span>@artist.Name</span>
-    </a>
-    <span class="glyphicon glyphicon-eye-open " style="margin-left: 2rem"> @artist.Visits</span>
-    <span class="glyphicon glyphicon-thumbs-up" style="margin-left: 2rem"> @artist.Likes</span>
-</div>
+    var linkUrl = Url.Action("Page/" + artist.Id, "Artistes");
+    <div>
+        <a href="@linkUrl" data-toogle="tooltip" title="Modifier le profil" style="margin-left: 2rem">
+            <div class="smallAvatar"
+                 style="background: url(@avatarUrl) no-repeat center center; background-size: cover;"></div>
+            <span>@artist.Name</span>
+        </a>
+        <span class="glyphicon glyphicon-eye-open " style="margin-left: 2rem"> @artist.Visits</span>
+        <span class="glyphicon glyphicon-thumbs-up" style="margin-left: 2rem"> @artist.Likes</span>
+    </div>
+}
+
+@helper AvatarProfilLinkName(MySpace.Models.User user)
+{var Url = new System.Web.Mvc.UrlHelper(HttpContext.Current.Request.RequestContext);
+    var avatarUrl = Url.Content(user.GetAvatarURL());
+    var linkUrl = Url.Action("Page/" + user.Id, "Artistes");
+    <div>
+        <a href="@linkUrl" data-toogle="tooltip" title="Modifier le profil" style="margin-left: 2rem">
+            <div class="smallAvatar"
+                 style="background: url(@avatarUrl) no-repeat center center; background-size: cover;"></div>
+            <span>@user.FirstName @user.LastName</span>
+        </a>
+    </div>
 }
 
 @helper AvatarUser(MySpace.Models.User user)
@@ -265,12 +278,12 @@
 }
 
 @helper YoutubeThumbnail(MySpace.Models.Video video)
-    {
-        string youtubeId = video.YoutubeLink;
-        string youtubeLink = "https://www.youtube.com/watch?v=" + youtubeId;
-        string youtubeThumbnail = "http://img.youtube.com/vi/" + youtubeId + "/0.jpg";
-        <a href="@youtubeLink" target="_blank">
-            <h5 style="width:260px" class="ellipsis">@video.Title</h5>
-            <img class="youtubeThumbnail" src="@youtubeThumbnail" alt="" />
-        </a>
-    }
+{
+    string youtubeId = video.YoutubeLink;
+    string youtubeLink = "https://www.youtube.com/watch?v=" + youtubeId;
+    string youtubeThumbnail = "http://img.youtube.com/vi/" + youtubeId + "/0.jpg";
+    <a href="@youtubeLink" target="_blank">
+        <h5 style="width:260px" class="ellipsis">@video.Title</h5>
+        <img class="youtubeThumbnail" src="@youtubeThumbnail" alt="" />
+    </a>
+}
