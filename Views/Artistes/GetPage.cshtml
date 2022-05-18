@@ -17,14 +17,19 @@
 <div>
     <span>@Model.Visits Visits</span>
     <span>@Model.Likes Likes</span>
+   
+    <h4 class="glyphicon glyphicon-thumbs-down" title="S'abonner" id="like" artisteId="@Model.Id">
+    </h4>
     <form>
         @if (ViewBag.isFan == 1)
         {
-            <span class="glyphicon glyphicon-thumbs-down"></span>
+            <h4 class="glyphicon glyphicon-thumbs-down" title="S'abonner" id="like" artisteId="@Model.Id">
+            </h4>
         }
         else if (ViewBag.isFan == 0)
         {
-            <span class="glyphicon glyphicon-thumbs-up"></span>
+            <h4 class="glyphicon glyphicon-thumbs-up" title="S'abonner" id="like" artisteId="@Model.Id">
+            </h4>
         }
     </form>
     <div>
@@ -87,7 +92,7 @@
                 }
                 <span style="margin-left: 5rem">@message.Text</span>
             </div>
-            
+
         }
     </fieldset>
 
