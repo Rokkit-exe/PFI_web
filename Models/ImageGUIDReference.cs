@@ -116,8 +116,8 @@ namespace MySpace.Models
                 if (!String.IsNullOrEmpty(PreviousGUID))
                 {
                     System.IO.File.Delete(HttpContext.Current.Server.MapPath(MakeUrl(PreviousGUID)));
-                    if (HasThumbnail)
-                        System.IO.File.Delete(HttpContext.Current.Server.MapPath(MakeUrl(PreviousGUID, true /*thumbnail*/)));
+                    //if (HasThumbnail)
+                    //    System.IO.File.Delete(HttpContext.Current.Server.MapPath(MakeUrl(PreviousGUID, true /*thumbnail*/)));
                 }
                 do
                 {
@@ -127,8 +127,8 @@ namespace MySpace.Models
                 } while (File.Exists(imagePath)); 
 
                 SaveImageFile(GUID, ImageData);
-                if (HasThumbnail)
-                    SaveImageFile(GUID, ImageData, true /*thumbnail*/);
+                //if (HasThumbnail)
+                //    SaveImageFile(GUID, ImageData, true /*thumbnail*/);
 
                 return GUID;
             }

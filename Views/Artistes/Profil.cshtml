@@ -16,7 +16,6 @@
     @Html.HiddenFor(model => model.Messages)
 
     <div class="form-horizontal">
-
         <fieldset class="formField">
             <legend>@Html.DisplayNameFor(model => model.Name) </legend>
             @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", placeholder = @Html.DisplayNameFor(model => model.Name) } })

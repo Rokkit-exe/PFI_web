@@ -110,7 +110,6 @@ namespace MySpace.Controllers
             List<Artiste> artistes = DB.Artistes.ToList();
             if (forceRefresh || !IsArtistUpToDate())
             {
-                
                 string name = (string)Session["name"];
                 if (name != "" || name != null)
                     artistes = DBDAL.SearchArtistByName(artistes, name);
@@ -279,7 +278,7 @@ namespace MySpace.Controllers
         public ActionResult Profil(Artiste artiste)
         {
             artiste.User = DB.Users.Find(OnlineUsers.CurrentUserId);
-            //artiste.MainPhotoGUID = "/ImagesData/Avatars/no_avatar.png";
+            artiste.Save();
             //if (ModelState.IsValid)
             //{ 
                 artiste = DB.Update_Artiste(artiste);

@@ -46,6 +46,8 @@ namespace MySpace.Models
         public string Name { get; set; }
         [Display(Name = "MainPhotoGUID")]
         public string MainPhotoGUID { get; set; } = "/ImagesData/Avatars/no_avatar.png";
+        [Display(Name = "Data")]
+        public string Data { get; set; }
         [Display(Name = "Description"), Required(ErrorMessage = "Obligatoire")]
         public string Description { get; set; }
         [Display(Name = "Approved"), Required(ErrorMessage = "Obligatoire")]
