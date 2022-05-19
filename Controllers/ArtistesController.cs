@@ -101,8 +101,7 @@ namespace MySpace.Controllers
         public ActionResult Index()
         {
             InitSortArtist();
-            InitSearchByName();
-            SetLocalVideosSerialNumber();
+            InitSearchByName();     
             return View();
         }
         public ActionResult GetArtistsList(bool forceRefresh = false)
@@ -110,6 +109,7 @@ namespace MySpace.Controllers
             List<Artiste> artistes = DB.Artistes.ToList();
             if (forceRefresh || !IsArtistUpToDate())
             {
+                SetLocalArtistSerialNumber();
                 string name = (string)Session["name"];
                 if (name != "" || name != null)
                     artistes = DBDAL.SearchArtistByName(artistes, name);
@@ -148,7 +148,7 @@ namespace MySpace.Controllers
                     default:
                         break;
                 }
-                SetLocalArtistSerialNumber();
+                
                 return PartialView(artistes.Where(a => a.Approved).ToList());
             }
             return PartialView(artistes.Where(a => a.Approved).ToList());
