@@ -399,8 +399,14 @@ namespace MySpace.Controllers
         [AdminAccess]
         public ActionResult GroupEmail()
         {
+            Artiste artiste = DB.Artistes.Find(OnlineUsers.CurrentUserId);
             ViewBag.SelectedUsers = new List<int>();
-            ViewBag.Users = DB.SortedUsers();
+            List<User> userList = new List<User>();
+            foreach (FanLike fan in artiste.FanLikes)
+            {
+                userList.Add(fan.User);
+            }
+            ViewBag.Users = userList;
             return View(new GroupEmail());
         }
         [HttpPost]

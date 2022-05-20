@@ -54,7 +54,7 @@ namespace MySpace.Controllers
         public void InitSortArtist()
         {
             if (Session["ArtistFieldToSort"] == null)
-                Session["ArtistFieldToSort"] = "dates"; // "users", "ratings"
+                Session["ArtistFieldToSort"] = ""; 
             if (Session["ArtistFieldToSortDir"] == null)
                 Session["ArtistFieldToSortDir"] = false; // ascendant
         }
@@ -351,7 +351,39 @@ namespace MySpace.Controllers
             }
             return null;
         }
-
+        public ActionResult GroupEmail()
+        {
+            Artiste artiste = DB.Artistes.Where(a => OnlineUsers.CurrentUserId == a.UserId).FirstOrDefault();
+            ViewBag.SelectedUsers = new List<int>();
+            List<User> userList = new List<User>();
+            foreach (FanLike fan in artiste.FanLikes)
+            {
+                userList.Add(fan.User);
+            }
+            ViewBag.Users = userList;
+            return View(new GroupEmail());
+        }
+        [HttpPost]
+        public ActionResult GroupEmail(GroupEmail groupEmail, List<int> SelectedUsers)
+        {
+            Artiste artiste = DB.Artistes.Where(a => OnlineUsers.CurrentUserId == a.UserId).FirstOrDefault();
+            if (ModelState.IsValid)
+            {
+                groupEmail.SelectedUsers = SelectedUsers;
+                groupEmail.Send(DB);
+                return RedirectToAction("UserList");
+            }
+            List<User> userList = new List<User>();
+            foreach (FanLike fan in artiste.FanLikes)
+            {
+                userList.Add(fan.User);
+            }
+            ViewBag.Users = userList;
+            ViewBag.SelectedUsers = SelectedUsers;
+   
+            return View(groupEmail);
+        }
 
     }
+
 }

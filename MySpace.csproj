@@ -144,6 +144,7 @@
     </Compile>
     <Compile Include="Models\ArtisteView.cs" />
     <Compile Include="Models\DBDAL.cs" />
+    <Compile Include="Models\EmailView.cs" />
     <Compile Include="Models\FanLike.cs">
       <DependentUpon>MySpaceDBEntities.tt</DependentUpon>
     </Compile>
@@ -313,6 +314,7 @@
     <Content Include="Views\Artistes\GetPage.cshtml" />
     <Content Include="Views\Artistes\Profil.cshtml" />
     <Content Include="Views\Artistes\GetArtistsList.cshtml" />
+    <Content Include="Views\Artistes\GroupEmail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Data\" />
