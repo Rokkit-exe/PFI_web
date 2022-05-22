@@ -157,7 +157,7 @@
 {var Url = new System.Web.Mvc.UrlHelper(HttpContext.Current.Request.RequestContext);
     var avatarUrl = Url.Content(artist.User.GetAvatarURL());
     var linkUrl = Url.Action("Page/" + artist.Id, "Artistes");
-    <div style="margin-top: 4rem; display: grid; grid-template-columns: 200px 50px 50px 50px 50px">
+    <div style="margin-top: 4rem; display: grid; grid-template-columns: 200px 70px 70px ">
         <div>
             <a href="@linkUrl" data-toogle="tooltip" title="Modifier le profil" style="margin-left: 2rem;">
                 <div class="smallAvatar"

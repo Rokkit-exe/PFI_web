@@ -1,15 +1,35 @@
 ﻿@model IEnumerable<MySpace.Models.Artiste>
 
+
 @{
-    string sortDatesIconColor = ((string)Session["ArtistFieldToSort"] == "dates" ? "blue" : "gray");
-    string sortUsersIconColor = ((string)Session["ArtistFieldToSort"] == "users" ? "blue" : "gray");
-    string sortRatingsIconColor = ((string)Session["ArtistFieldToSort"] == "ratings" ? "blue" : "gray");
+    string sortnamesIconColor = ((string)Session["ArtistFieldToSort"] == "names" ? "blue" : "black");
+    string sortvuesIconColor = ((string)Session["ArtistFieldToSort"] == "vues" ? "blue" : "black");
+    string sortlikesIconColor = ((string)Session["ArtistFieldToSort"] == "likes" ? "blue" : "black");
 }
-@foreach (var item in Model)
-{
-    <tr style="margin-top: 5rem">
-        <td style="margin-top: 5rem">
-            @Helper.AvatarProfilLink(item)
-        </td>
-    </tr>
-}
+
+<div style="display: grid; grid-template-columns: 160px 60px 30px 30px 30px 30px 30px 30px">
+    <input id="searchByName" type="search" style="width:150px; height:22px" class="form-control" placeholder="Recherche..." value="">
+    <span id="doSearch" class="glyphicon glyphiconStyle glyphicon-search pointer" title="Recherche par mot-clées" style=""></span>
+    <span id="sortNames" fieldtosort="names" class="sortArtists glyphicon glyphiconStyle glyphicon-user pointer" title="Trier par dates de création" style="color:@sortnamesIconColor"></span>
+    <span id="sortVues" fieldtosort="vues" class="sortArtists glyphicon glyphiconStyle glyphicon-eye-open pointer" title="Trier par noms d'usager'" style="color: @sortvuesIconColor"></span>
+    <span id="sortLikes" fieldtosort="likes" class="sortArtists glyphicon glyphiconStyle glyphicon-thumbs-up pointer" title="Trier par évaluations" style="color: @sortlikesIconColor"></span>
+    <span></span>
+    <span id="matrixView" class="glyphicon glyphiconStyle glyphicon-th pointer" title="Matrice" style="color:blue !important"></span>
+</div>
+
+<table class="table" id="">
+    @foreach (var item in Model)
+    {
+        <tr style="margin-top: 5rem">
+            <td style="margin-top: 5rem">
+                <div>
+                    <span>@Session["ArtistFieldToSort"]</span>
+                </div>
+                @Helper.AvatarProfilLink(item)
+            </td>
+        </tr>
+    }
+</table>
+
+
+
