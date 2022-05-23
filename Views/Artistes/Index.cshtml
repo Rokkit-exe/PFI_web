@@ -15,7 +15,7 @@
     <span id="matrixView" class="glyphicon glyphiconStyle glyphicon-th pointer" title="Matrice" style="color:blue !important"></span>
 </div>
 
-<table class="table" id="ArtistListContainer">
+<table class="ArtistListContainer" id="ArtistListContainer">
 
     @{Html.RenderAction("GetArtistsList", new { forceRefresh = true });}
 

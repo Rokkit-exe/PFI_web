@@ -151,7 +151,7 @@ namespace MySpace.Controllers
                 
                 return PartialView(artistes.Where(a => a.Approved).ToList());
             }
-            return PartialView(artistes.Where(a => a.Approved).ToList());
+            return null;
         }
 
         // GET: Artistes/Page/5
