@@ -73,16 +73,19 @@
         @foreach (MySpace.Models.Message message in (List<MySpace.Models.Message>)ViewBag.messages)
         {
             <div style="margin-bottom: 4rem;">
-                <div style="display: grid; grid-template-columns: 200px 10px 120px;">
+                <div style="display: grid; grid-template-columns: 200px 10px 120px 30px;">
                     <div>@Helper.AvatarProfilLinkName(message.User)</div>
                     <div></div>
                     <div>@Helper.When(message.Creation)</div>
+                    @if (ViewBag.currentUserId == message.UserId)
+                    {
+                        <div>
+                            <span id="DeleteMessage" class="glyphicon glyphicon-remove pointer glyphicon-red glyphiconStyle" messageId="@message.Id"></span>
+                        </div>
+                    }
                 </div>
 
-                @if (ViewBag.user == message.UserId)
-                {
-                    <span id="DeleteMessage" class="glyphicon glyphicon-remove pointer glyphicon-red glyphiconStyle" messageId="@message.Id"></span>
-                }
+                
                 <span style="margin-left: 5rem">@message.Text</span>
             </div>
 
