@@ -18,10 +18,6 @@
     <span id="matrixView" matrixView="@Session["matrixView"]"class="glyphicon glyphiconStyle glyphicon-th pointer" title="Matrice" style="color:@matrixView"></span>
 </div>
 
-<div>
-    <span>@matrixView</span>
-</div>
-
 @if ((bool)Session["matrixView"] == false)
 {
     <table class="table" id="">
