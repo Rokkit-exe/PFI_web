@@ -153,7 +153,7 @@
     </a>
 }
 
-@helper AvatarProfilLink(MySpace.Models.Artiste artist)
+@helper ArtisteProfilLink(MySpace.Models.Artiste artist)
 {var Url = new System.Web.Mvc.UrlHelper(HttpContext.Current.Request.RequestContext);
     var avatarUrl = Url.Content(artist.User.GetAvatarURL());
     var linkUrl = Url.Action("Page/" + artist.Id, "Artistes");
@@ -175,6 +175,7 @@
         </div>
     </div>
 }
+}
 
 @helper AvatarProfilLinkName(MySpace.Models.User user)
 {var Url = new System.Web.Mvc.UrlHelper(HttpContext.Current.Request.RequestContext);
@@ -185,6 +186,16 @@
             <div class="smallAvatar"
                  style="background: url(@avatarUrl) no-repeat center center; background-size: cover;"></div>
             <span>@user.FirstName @user.LastName</span>
+        </a>
+    </div>
+}
+
+@helper ArtisteProfilLinkName(MySpace.Models.Artiste artiste)
+{var Url = new System.Web.Mvc.UrlHelper(HttpContext.Current.Request.RequestContext);
+    var linkUrl = Url.Action("Page/" + artiste.Id, "Artistes");
+    <div>
+        <a href="@linkUrl" data-toogle="tooltip" title="Modifier le profil" style="margin-left: 2rem">
+            <span>@artiste.Name</span>
         </a>
     </div>
 }

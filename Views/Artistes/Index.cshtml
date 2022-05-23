@@ -18,7 +18,7 @@
     @*@Scripts.Render("~/bundles/bootstrap")*@
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/partialRefresh")
-    <script>
+<script>
 
         let partialRefresh = new PartialRefresh("@Url.Action("GetArtistsList")", "ArtistListContainer", 5, postRefreshCallBacks);
         function postRefreshCallBacks() {
@@ -44,15 +44,11 @@
                 let url = @Url.Action("/")+ "SortArtistsBy?fieldToSort=" + $(this).attr("fieldToSort");
                 partialRefresh.command(url);
             });
-            $("#listView").click(function () {
-                let url = /Artistes/ + "ViewArtistLayout?list=false";
-                partialRefresh.command(url);
-            });
             $("#matrixView").click(function () {
-                let url = /Artistes/ + "ViewArtistLayout?list=true";
+                let url = @Url.Action("/") + "ViewArtistLayout";
                 partialRefresh.command(url);
             });
         }
 
-    </script>
+</script>
 }

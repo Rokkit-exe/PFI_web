@@ -5,6 +5,7 @@
     string sortnamesIconColor = ((string)Session["ArtistFieldToSort"] == "names" ? "blue" : "black");
     string sortvuesIconColor = ((string)Session["ArtistFieldToSort"] == "vues" ? "blue" : "black");
     string sortlikesIconColor = ((string)Session["ArtistFieldToSort"] == "likes" ? "blue" : "black");
+    string matrixView = ((bool)Session["matrixView"] == true ? "blue" : "black");
 }
 
 <div style="display: grid; grid-template-columns: 160px 60px 30px 30px 30px 30px 30px 30px">
@@ -14,22 +15,51 @@
     <span id="sortVues" fieldtosort="vues" class="sortArtists glyphicon glyphiconStyle glyphicon-eye-open pointer" title="Trier par noms d'usager'" style="color: @sortvuesIconColor"></span>
     <span id="sortLikes" fieldtosort="likes" class="sortArtists glyphicon glyphiconStyle glyphicon-thumbs-up pointer" title="Trier par évaluations" style="color: @sortlikesIconColor"></span>
     <span></span>
-    <span id="matrixView" class="glyphicon glyphiconStyle glyphicon-th pointer" title="Matrice" style="color:blue !important"></span>
+    <span id="matrixView" matrixView="@Session["matrixView"]"class="glyphicon glyphiconStyle glyphicon-th pointer" title="Matrice" style="color:@matrixView"></span>
 </div>
 
-<table class="table" id="">
-    @foreach (var item in Model)
-    {
-        <tr style="margin-top: 5rem">
-            <td style="margin-top: 5rem">
+<div>
+    <span>@matrixView</span>
+</div>
+
+@if ((bool)Session["matrixView"] == false)
+{
+    <table class="table" id="">
+        @foreach (var item in Model)
+        {
+            <tr style="margin-top: 5rem">
+                <td style="margin-top: 5rem">
+                    @Helper.ArtisteProfilLink(item)
+                </td>
+            </tr>
+        }
+    </table>
+}
+else
+{
+    <div class="photosContainerGrid">
+        @foreach (var item in Model)
+        {
+        <div class="photoContainer">
+            <div>
+                @Helper.ArtisteProfilLinkName(item)
+            </div>
+            <img class="photo" src="@Url.Content(item.GetUrl(false))"></img>
+            <div style="display: grid; grid-template-columns: 70px 70px; margin-bottom: 1rem">
                 <div>
-                    <span>@Session["ArtistFieldToSort"]</span>
+                    <span class="glyphicon glyphicon-eye-open " style="margin-left: 2rem"></span>
+                    <span>@item.Visits</span>
                 </div>
-                @Helper.AvatarProfilLink(item)
-            </td>
-        </tr>
-    }
-</table>
+                <div>
+                    <span class="glyphicon glyphicon-thumbs-up" style="margin-left: 2rem"></span>
+                    <span>@item.Likes</span>
+                </div>
+            </div>
+        </div>
+        }
+    </div>
+}
+
 
 
 
