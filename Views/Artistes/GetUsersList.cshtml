@@ -52,7 +52,7 @@
             <div>
                 @if (!item.User.IsAdmin)
                 {
-                    @Helper.GlyphiconConfirmCommand("Delete/" + item.UserId.ToString(), "partialRefresh.command", "glyphicon-remove-circle", "Effacer l'usager " + item.User.GetFullName() + "...")
+                    @Helper.GlyphiconConfirmAction("Delete?userId=" + item.UserId.ToString(), "glyphicon-remove-circle", "Effacer l'usager " + item.User.GetFullName() + "...")
                 }
                 else
                 {

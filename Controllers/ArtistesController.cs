@@ -327,13 +327,18 @@ namespace MySpace.Controllers
         }
         public ActionResult GroupEmail()
         {
+
             Artiste artiste = DB.Artistes.Where(a => OnlineUsers.CurrentUserId == a.UserId).FirstOrDefault();
             ViewBag.SelectedUsers = new List<int>();
             List<User> userList = new List<User>();
-            foreach (FanLike fan in artiste.FanLikes)
+            if (artiste != null)
             {
-                userList.Add(fan.User);
+                foreach (FanLike fan in artiste.FanLikes)
+                {
+                    userList.Add(fan.User);
+                }
             }
+            
             ViewBag.Users = userList;
             return View(new GroupEmail());
         }
@@ -376,6 +381,7 @@ namespace MySpace.Controllers
             Artiste artiste = DB.Artistes.Where(a=> a.UserId == userId).FirstOrDefault();
             DB.Delete_Artiste(artiste);
             DB.RemoveUser(userId);
+            RedirectToAction("index");
             return null;
         }
 

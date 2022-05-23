@@ -475,18 +475,14 @@ namespace MySpace.Models
         }
         public static void Delete_Artiste(this MySpaceDBEntities DB, Artiste artiste)
         {
-            foreach(FanLike like in artiste.FanLikes)
-            {
-                DB.FanLikes.Remove(like);
-            }
-            foreach (Message message in artiste.Messages)
-            {
-                DB.Messages.Remove(message);
-            }
+            DB.FanLikes.RemoveRange(DB.FanLikes.Where(a => a.ArtistId == artiste.Id));
+            DB.Messages.RemoveRange(DB.Messages.Where(a => a.ArtistId == artiste.Id));
+            DB.Videos.RemoveRange(DB.Videos.Where(a => a.ArtistId == artiste.Id));
             DB.Artistes.Remove(artiste);
             DB.SaveChanges();
+            DB.SaveChanges();
         }
-
+        
 
     }
 }

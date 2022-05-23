@@ -34,7 +34,7 @@
     </div>
     <fieldset style="border: solid black 1px; margin-top: 10px">
         <legend>
-            Vidéos Youtubeè
+            Vidéos Youtube
             @{ 
                 if(ViewBag.isFan == -1)
                 {
@@ -83,7 +83,7 @@
                     <div>@Helper.AvatarProfilLinkName(message.User)</div>
                     <div></div>
                     <div>@Helper.When(message.Creation)</div>
-                    @if (ViewBag.currentUserId == message.UserId)
+                    @if (ViewBag.currentUserId == message.UserId || ViewBag.isAdmin == 1)
                     {
                         <div>
                             <span id="DeleteMessage" class="glyphicon glyphicon-remove pointer glyphicon-red glyphiconStyle" messageId="@message.Id"></span>
