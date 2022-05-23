@@ -92,7 +92,7 @@ legend {
 
 .userContainer {
     display: grid;
-    grid-template-columns: 260px 100px 80px 80px 120px 80px 80px 80px;
+    grid-template-columns: 600px 100px 80px 80px 120px 80px 80px 80px;
     height: 60px;
 }
 

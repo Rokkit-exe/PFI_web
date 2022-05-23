@@ -1,0 +1,65 @@
+﻿
+@model IEnumerable<MySpace.Models.Artiste>
+
+@foreach (var item in Model)
+{
+    if (item.UserId != MySpace.Models.OnlineUsers.CurrentUserId)
+    {
+        var emailReference = "mailto:" + item.User.Email;
+        <div class="userContainer" style="font-size:18px;">
+            <div style="display:grid; grid-template-columns:30px 400px">
+                <div class="EditProfil glyphicon glyphiconStyle glyphicon-edit glyphicon-active" url="@Url.Action("Profil/" + item.Id)"></div>
+                
+                @Helper.ArtisteProfilLink2(item)
+                
+
+            </div>
+
+            <div style="text-align:center">
+                @Helper.OnLineStatusIcon(MySpace.Models.OnlineUsers.IsOnLine(item.UserId), item.User.Blocked)
+            </div>
+            <div style="text-align:center">
+                <span class="changeAccess" userId="@item.Id.ToString()">
+                    @Helper.UserTypeIcon(item.User.UserTypeId)
+                </span>
+            </div>
+            <div style="text-align:center">
+                @Helper.GenderIcon(item.User.GenderId)
+            </div>
+            <div>
+                @item.User.CreationDate.ToShortDateStringFRCA()
+            </div>
+            <div style="text-align:center">
+                @Helper.Checked(item.User.Verified)
+            </div>
+            <div style="text-align:center">
+                @if (!item.User.IsAdmin)
+                {
+                    if (item.User.Blocked)
+                    {
+                        <input type="checkbox" id="blocked_@item.UserId" class="CB_Blocked" checked />
+                    }
+                    else
+                    {
+                        <input type="checkbox" id="blocked_@item.UserId" class="CB_Blocked" />
+                    }
+                }
+                else
+                {
+                    <div></div>
+                }
+            </div>
+            <div>
+                @if (!item.User.IsAdmin)
+                {
+                    @Helper.GlyphiconConfirmCommand("Delete/" + item.UserId.ToString(), "partialRefresh.command", "glyphicon-remove-circle", "Effacer l'usager " + item.User.GetFullName() + "...")
+                }
+                else
+                {
+                    <div></div>
+                }
+
+            </div>
+        </div>
+    }
+}

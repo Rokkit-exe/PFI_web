@@ -473,7 +473,20 @@ namespace MySpace.Models
             return fanLike;
 
         }
-        
+        public static void Delete_Artiste(this MySpaceDBEntities DB, Artiste artiste)
+        {
+            foreach(FanLike like in artiste.FanLikes)
+            {
+                DB.FanLikes.Remove(like);
+            }
+            foreach (Message message in artiste.Messages)
+            {
+                DB.Messages.Remove(message);
+            }
+            DB.Artistes.Remove(artiste);
+            DB.SaveChanges();
+        }
+
 
     }
 }

@@ -23,37 +23,45 @@
     <table class="table" id="">
         @foreach (var item in Model)
         {
-            <tr style="margin-top: 5rem">
-                <td style="margin-top: 5rem">
-                    @Helper.ArtisteProfilLink(item)
-                </td>
-            </tr>
+            if (!item.User.Blocked)
+            {
+                <tr style="margin-top: 5rem">
+                    <td style="margin-top: 5rem">
+                        @Helper.ArtisteProfilLink(item)
+                    </td>
+                </tr>
+            }
+            
         }
     </table>
 }
 else
 {
-    <div class="photosContainerGrid">
-        @foreach (var item in Model)
+<div class="photosContainerGrid">
+    @foreach (var item in Model)
+    {
+        if (!item.User.Blocked)
         {
-        <div class="photoContainer">
-            <div>
-                @Helper.ArtisteProfilLinkName(item)
-            </div>
-            <img class="photo" src="@Url.Content(item.GetUrl(false))"></img>
-            <div style="display: grid; grid-template-columns: 70px 70px; margin-bottom: 1rem">
+            <div class="photoContainer">
                 <div>
-                    <span class="glyphicon glyphicon-eye-open " style="margin-left: 2rem"></span>
-                    <span>@item.Visits</span>
+                    @Helper.ArtisteProfilLinkName(item)
                 </div>
-                <div>
-                    <span class="glyphicon glyphicon-thumbs-up" style="margin-left: 2rem"></span>
-                    <span>@item.Likes</span>
+                <img class="photo" src="@Url.Content(item.GetUrl(false))"></img>
+                <div style="display: grid; grid-template-columns: 70px 70px; margin-bottom: 1rem">
+                    <div>
+                        <span class="glyphicon glyphicon-eye-open " style="margin-left: 2rem"></span>
+                        <span>@item.Visits</span>
+                    </div>
+                    <div>
+                        <span class="glyphicon glyphicon-thumbs-up" style="margin-left: 2rem"></span>
+                        <span>@item.Likes</span>
+                    </div>
                 </div>
             </div>
-        </div>
         }
-    </div>
+
+    }
+</div>
 }
 
 
