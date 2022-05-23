@@ -54,12 +54,10 @@ namespace MySpace.Controllers
         public void InitSortArtist()
         {
             if (Session["ArtistFieldToSort"] == null)
-                Session["ArtistFieldToSort"] = ""; 
+                Session["ArtistFieldToSort"] = "names"; 
             if (Session["ArtistFieldToSortDir"] == null)
-                Session["ArtistFieldToSortDir"] = false; // ascendant
+                Session["ArtistFieldToSortDir"] = true; // ascendant
         }
-
-
 
         public void InitSearchByName()
         {
@@ -84,24 +82,21 @@ namespace MySpace.Controllers
             else
             {
                 Session["ArtistFieldToSort"] = fieldToSort;
-                Session["ArtistFieldToSortDir"] = true;
             }
             return null;
         }
 
-        public ActionResult ViewArtistLayout(bool list)
+        public ActionResult ViewArtistLayout()
         {
-            if (list)
-            {
-
-            }
+            Session["matrixView"] = !(bool)Session["matrixView"];
             return null;
         }
 
         public ActionResult Index()
         {
             InitSortArtist();
-            InitSearchByName();     
+            InitSearchByName();
+            Session["matrixView"] = Session["matrixView"] == null ? false : true;
             return View();
         }
         public ActionResult GetArtistsList(bool forceRefresh = false)
