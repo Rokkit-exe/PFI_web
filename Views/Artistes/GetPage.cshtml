@@ -35,7 +35,13 @@
     <fieldset style="border: solid black 1px; margin-top: 10px">
         <legend>
             Vidéos Youtube
-            <span id="AddVideo" style="margin-left: 15px; color: green" title="Ajouter une video" class="glyphicon glyphiconStyle glyphicon-plus pointer"></span>
+            @{ 
+                if(ViewBag.isFan == -1)
+                {
+                     <span id="AddVideo" style="margin-left: 15px; color: green" title="Ajouter une video" class="glyphicon glyphiconStyle glyphicon-plus pointer"></span>
+                }
+            }
+            
         </legend>
 
         <fieldset id="AddVideoForm" style="display: none; margin-top: 10px">
@@ -77,7 +83,7 @@
                     <div>@Helper.AvatarProfilLinkName(message.User)</div>
                     <div></div>
                     <div>@Helper.When(message.Creation)</div>
-                    @if (ViewBag.currentUserId == message.UserId)
+                    @if (ViewBag.currentUserId == message.UserId || ViewBag.isAdmin == 1)
                     {
                         <div>
                             <span id="DeleteMessage" class="glyphicon glyphicon-remove pointer glyphicon-red glyphiconStyle" messageId="@message.Id"></span>

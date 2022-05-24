@@ -203,28 +203,7 @@ namespace MySpace.Controllers
 
         public int IsAdmin() => DB.Users.Find(OnlineUsers.CurrentUserId).UserTypeId == 1 ? 1 : 0;
 
-        // GET: Artistes/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: Artistes/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
+       
         public ActionResult AddVideo(int artistId , string title , string link)
         {
             string youtubeId = "";
@@ -348,13 +327,18 @@ namespace MySpace.Controllers
         }
         public ActionResult GroupEmail()
         {
+
             Artiste artiste = DB.Artistes.Where(a => OnlineUsers.CurrentUserId == a.UserId).FirstOrDefault();
             ViewBag.SelectedUsers = new List<int>();
             List<User> userList = new List<User>();
-            foreach (FanLike fan in artiste.FanLikes)
+            if (artiste != null)
             {
-                userList.Add(fan.User);
+                foreach (FanLike fan in artiste.FanLikes)
+                {
+                    userList.Add(fan.User);
+                }
             }
+            
             ViewBag.Users = userList;
             return View(new GroupEmail());
         }
@@ -377,6 +361,74 @@ namespace MySpace.Controllers
             ViewBag.SelectedUsers = SelectedUsers;
    
             return View(groupEmail);
+        }
+        public ActionResult UserList()
+        {
+            return View();
+        }
+
+        [AdminAccess]
+        public ActionResult ChangeUserBlockedStatus(int userid, bool blocked)
+        {
+            User user = DB.FindUser(userid);
+            user.Blocked = blocked;
+            DB.Update_User(user);
+            return null;
+        }
+
+        public ActionResult Delete(int userId)
+        {
+            Artiste artiste = DB.Artistes.Where(a=> a.UserId == userId).FirstOrDefault();
+            DB.Delete_Artiste(artiste);
+            DB.RemoveUser(userId);
+            RedirectToAction("index");
+            return null;
+        }
+
+        [AdminAccess(false)] // RefreshTimout = false otherwise periodical refresh with lead to never timed out session
+        public ActionResult GetUsersList(bool forceRefresh = false)
+        {
+            if (forceRefresh || OnlineUsers.NeedUpdate())
+            {
+                return PartialView(DB.Artistes.ToList());
+            }
+            return null;
+        }
+
+        [AdminAccess]
+        public ActionResult ChangeUserAccess(int userid)
+        {
+            User user = DB.FindUser(userid);
+            user.UserTypeId = (user.UserTypeId + 1) % 3 + 1;
+            DB.Update_User(user);
+            return null;
+        }
+        [AdminAccess]
+        public ActionResult EditProfil(int id)
+        {
+            ViewBag.Genders = SelectListItemConverter<Gender>.Convert(DB.Genders.ToList());
+            User user = DB.Users.Find(id);
+            if (user != null)
+            {
+                UserClone uc = new UserClone(user);
+                return View(uc);
+            }
+            else
+                return null;
+        }
+
+        [HttpPost]
+        public ActionResult EditProfil(UserClone uc)
+        {
+            if (ModelState.IsValid)
+            {
+                User user = DB.Users.Find(uc.Id);
+                uc.CopyToUser(user);
+                DB.Update_User(user);
+                return RedirectToAction("UserList");
+            }
+            ViewBag.Genders = SelectListItemConverter<Gender>.Convert(DB.Genders.ToList());
+            return View(uc);
         }
 
     }

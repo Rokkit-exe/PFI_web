@@ -315,6 +315,8 @@
     <Content Include="Views\Artistes\Profil.cshtml" />
     <Content Include="Views\Artistes\GetArtistsList.cshtml" />
     <Content Include="Views\Artistes\GroupEmail.cshtml" />
+    <Content Include="Views\Artistes\UserList.cshtml" />
+    <Content Include="Views\Artistes\GetUsersList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Data\" />

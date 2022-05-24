@@ -204,6 +204,7 @@ namespace MySpace.Models
             }
             return null;
         }
+        
         public static bool IsOnLine(int userId)
         {
             return UsersId.Contains(userId);
