@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "mssql1": {
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/myspacedbserver2/databases/MySpace_db",
+      "type": "mssql.azure",
+      "connectionId": "ConnectionStrings:MySpaceDBEntities",
+      "secretStore": "AzureAppSettings"
+    }
+  }
+}
