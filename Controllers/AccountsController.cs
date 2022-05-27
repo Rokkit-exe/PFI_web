@@ -93,6 +93,18 @@ namespace MySpace.Controllers
         public ActionResult VerifyDone(int id)
         {
             User newlySubscribedUser = DB.Users.Find(id);
+            if(newlySubscribedUser.UserTypeId == 2)
+            {
+                Artiste newArtiste = new Artiste
+                {
+                    UserId = newlySubscribedUser.Id,
+                    Name = newlySubscribedUser.FirstName + " " + newlySubscribedUser.LastName,
+                    User = newlySubscribedUser,
+                    Approved = true,
+                };
+                DB.Artistes.Add(newArtiste);
+                DB.SaveChanges();
+            }
             if (newlySubscribedUser != null)
                 return View(newlySubscribedUser);
             return RedirectToAction("Login");
