@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MySpace.Models
 {
@@ -16,6 +17,7 @@ namespace MySpace.Models
             this.Videos = new HashSet<Video>();
         }
 
+        [NotMapped]
         public string Data { get; set; }
         private static ImageGUIDReference PhotoReference = new ImageGUIDReference(@"/ImagesData/Photos/", @"no_image.png", true);
 
@@ -47,6 +49,7 @@ namespace MySpace.Models
         [Display(Name = "MainPhotoGUID")]
         public string MainPhotoGUID { get; set; } = "/ImagesData/Avatars/no_avatar.png";
         [Display(Name = "Data")]
+        [NotMapped]
         public string Data { get; set; }
         [Display(Name = "Description"), Required(ErrorMessage = "Obligatoire")]
         public string Description { get; set; }
